@@ -2,6 +2,9 @@
     <div class ="container">
         <h1 :value ="name"></h1>
     </div>
+    <button>
+        
+    </button>
 </template>
 <script>
     export default{
