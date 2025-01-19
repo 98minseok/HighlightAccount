@@ -1,21 +1,21 @@
 <template>
     <div class ="container">
-        <h1 :value ="name"></h1>
+        <h3>{{ user_name }}</h3>
     </div>
-    <button>
-        
-    </button>
 </template>
 <script>
     export default{
         setup(){
-            const name = props.name;
-            return {
-                name,
-            }
+
         },
         props : {
-            name : String,
+            user_name : String,
         }
     }
 </script>
+
+<style scoped>
+  .container{
+    text-align: center;
+  }
+</style>
