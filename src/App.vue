@@ -1,16 +1,20 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import FeeTable from './components/FeeTable.vue';
 import { useUserStore } from './store/user';
+import { RouterView } from 'vue-router';
 
 const { getUserData } = useUserStore();
-const userData = ref(getUserData());
+const userData = ref();
+onMounted(async() => {
+  userData.value = await(getUserData())
+})
 
 </script>
 
 <template>
   <main>
-    <FeeTable :userData = "userData"></FeeTable>
+    <RouterView></RouterView>
   </main>
 
 </template>

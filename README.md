@@ -1,21 +1,29 @@
-# HighlightAccount
+# movieapp
 
-## 개요
+This template should help get you started developing with Vue 3 in Vite.
 
-1. 하이라이트 모임통장 관리를 위해 만들어진 홈페이지
-2. 엑셀 파일의 형태를 가져와 관리를 용이하게 만든다.
-3. Vue를 사용해서 프로젝트를 만들어본다.
-4. Database 와 javaSpring을 이용해서 DB연동도 구성한다.
+## Recommended IDE Setup
 
-## 요구사항
-1. 하이라이트 멤버 모두의 월별 회비 납부 여부를 확인 가능하다.
-2. 하이라이트 멤버의 감면 여부를 설정 가능하다.
-3. 하이라이트 멤버의 불참한 달을 입력하여 불참비를 추가로 설정 가능하다
-4. 하이라이트 멤버의 아직 납부하지 않은 연 회비, 현재 월까지의 회비를 조회 가능하다.
-5. 관리자는 납부여부를 설정할 수 있다.
-6. 관리자는 불참한 달을 입력 할 수 있다.
-7. 
-## 추가 요구사항
-1. 카카오뱅크의 입금내역을 가져올 수 있는지.
-2. 어플리케이션 형태로 만들어서 카카오뱅크와 입금을 연동할 수 있는지.
-3. 
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vite.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Compile and Minify for Production
+
+```sh
+npm run build
+```

@@ -1,6 +1,6 @@
 <template>
     <button>저장</button>
-    <button>되돌리기</button>
+    <button @click ="renewFeeDataTable">되돌리기</button>
     <table>
         <thead>
             <tr>
@@ -11,19 +11,27 @@
                 <th>합계</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- v-for로 FeeRow 반복 -->
-            <FeeRow v-for="user in userData" :key="user.id" :user="user" />
+        <tbody :key = "forceRenew">
+            <FeeRow v-for="user in userData" :key="user.userId" :user="user" />
         </tbody>
     </table>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import FeeRow from './FeeRow.vue';
-
+import { useFeeStore } from '@/store/fee';
 defineProps({
     userData : Array
 })
+const forceRenew = ref(0);
+const {renewFeeData} = useFeeStore();
+
+const renewFeeDataTable = async() => {
+    await renewFeeData();
+    forceRenew.value = forceRenew.value + 1;
+}
+
 </script>
 
 <style>
