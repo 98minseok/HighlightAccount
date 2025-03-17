@@ -1,5 +1,5 @@
 <template>
-    <td :class ="isPaidValue ? 'isPaid' : ''" @click = "onClickFeeCell">     
+    <td :class ="isPaidValue ? 'isPaid' : ''" @click = "onClickFeeCell">   
     </td>
 </template>
 <script setup>
@@ -9,7 +9,7 @@ import { ref } from 'vue';
 const props = defineProps({
     isPaid : Boolean,
     month : Number,
-    userId : Number,
+    userId : String,
 })
 
 const emit = defineEmits(['checkCell'])

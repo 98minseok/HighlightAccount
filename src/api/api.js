@@ -5,15 +5,20 @@ const createURL = (url) => {
 }
 
 export async function getAllMembers(){
-    const response = await axios.get(createURL("api/members"))
-    console.log(response.data);
-    return response.data;
+
+    const response =  await axios.get(createURL("member/list")).
+    then((response) => response.data)
+    .catch((error) => error.response.data)
+
+    console.log(response);
+    return response
 }
 
 export async function getAllFeePayments(){
-    const response = await axios.get(createURL("api/fee-payments"))
-    console.log(response.data);
-    return response.data;
+    const response =  await axios.get(createURL("feeinfo/list")).
+    then((response) => response.data)
+    .catch((error) => error.response.data)
+    return response
 }
 
 export async function loginValidation(id,pwd) {
@@ -31,6 +36,18 @@ export async function insertMember(id,pwd){
     const response = await axios.post(createURL('member/register'),{
         id : id,
         pwd : pwd,
+    }).then((response) => response.data)
+    .catch((error) => error.response.data);
+    return response
+}
+
+export async function updateFeeInfo(feeUpdateList){
+    console.log(feeUpdateList);
+    const response = await axios.post(createURL('feeinfo/list'),feeUpdateList,
+    {
+        headers :{
+            "Content-Type" : "application/json"
+        } 
     }).then((response) => response.data)
     .catch((error) => error.response.data);
     return response

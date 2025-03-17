@@ -4,7 +4,7 @@ import FeeTable from '@/components/FeeTable.vue';
 import { useUserStore } from '@/store/user'; 
 
 const { getUserData } = useUserStore();
-const userData = ref();
+const userData = ref([]);
 onMounted(async() => {
   userData.value = await(getUserData())
 })

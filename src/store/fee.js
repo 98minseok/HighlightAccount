@@ -1,33 +1,50 @@
-import { getAllFeePayments } from "@/api/api";
+import { getAllFeePayments, updateFeeInfo } from "@/api/api";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useFeeStore = defineStore('fee',() => {
     const feeData = ref([]);
-    
+    let feeUpdateList = [];
 
     const renewFeeData = async() => {
-        feeData.value =  await getAllFeePayments();
+        const response = await getAllFeePayments();
+        feeData.value = response.data;
+        feeUpdateList = [];
     }
     renewFeeData();
-    const getFeeData = (user) => {
-        return feeData.value.filter((e) => e.userId == user)
+    const getFeeData = (memberId) => {
+        return feeData.value.filter((e) => e.memberId == memberId)
     }
     
-    const addFeeData = (user,month) => {
+    const addFeeData = (memberId,month) => {
         feeData.value.push({
             id : feeData.value.length + 1,
-            userId : user,
+            memberId : memberId,    
             month : month
         })
-
-        console.log(feeData.value);
+        feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month));
+        feeUpdateList.push({
+            memberId : memberId,
+            month : month,
+            type : "add"
+        })
+        console.log(feeUpdateList);
     }
 
-    const deleteFeeData = (user,month) => {
-        feeData.value = feeData.value.filter((e) => !(e.userId == user && e.month == month))
-
-        console.log(feeData.value);
+    const deleteFeeData = (memberId,month) => {
+        feeData.value = feeData.value.filter((e) => !(e.memberId == memberId && e.month == month))
+        feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month));
+        feeUpdateList.push({
+            memberId : memberId,
+            month : month,
+            type : "delete"
+        })
+        console.log(feeUpdateList);
     }
-    return { getFeeData , addFeeData , deleteFeeData , renewFeeData }
+
+    const saveFeeData = async() => {
+        const response = await updateFeeInfo(feeUpdateList);
+        console.log(response);
+    }
+    return { getFeeData , addFeeData , deleteFeeData , renewFeeData ,saveFeeData}
 })

@@ -1,5 +1,5 @@
 <template>
-    <tr>
+        <tr>
         <td align="center">{{ user.name }}</td>
         <FeeCell @checkCell = "renewData" v-for="num in 12" :userId="user.id" :month ="num" :isPaid="checkIsPaid(num)"></FeeCell>
         <td>{{ feeData.length * 15000}}</td>
