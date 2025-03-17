@@ -6,11 +6,13 @@ import HomeView from '@/view/Home.vue'
 import Login from '@/view/Login.vue'
 import Convert from '@/view/Convert.vue'
 import Register from '@/view/Register.vue'
+import MemberList from '@/components/MemberList.vue'
 
 const routes = [
   { path : '/' , component : HomeView , children : [
     { path: '/fee', component: FeeView },
     { path: '/test', component: TestView },
+    { path: '/memberList', component : MemberList}
   ]},
   { path: '/login', component : Login},
   { path: '/convert', component : Convert},

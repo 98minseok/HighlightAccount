@@ -4,12 +4,13 @@
             <ul class ="home-nav-list">
                     <RouterLink to="/"><li class ="home-nav-item">HOME</li></RouterLink>
                     <RouterLink to="fee"><li class ="home-nav-item">회비 납부 현황</li></RouterLink>
+                    <RouterLink to="memberList"><li class ="home-nav-item">팀원 정보</li></RouterLink>
             </ul>
             <ul class ="home-nav-list">
                 <RouterLink to ="login"><li class ="home-nav-item">Logout</li></RouterLink>
             </ul>
         </nav>
-        <div>
+        <div class ="home-router">
             <RouterView>
             </RouterView>
         </div>
@@ -20,6 +21,8 @@
 </script>
 <style lang="css" scoped>
     .home-main{
+        display: flex;
+        flex-direction: column;
         width: 100%;
         height: 100%;
     }
@@ -44,4 +47,9 @@
     .home-nav-item:hover{
         background-color: rgb(160, 255, 148);
     }
+    .home-router{
+        height:100%;
+        width: 100%;
+    }
+
 </style>
