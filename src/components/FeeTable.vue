@@ -30,11 +30,13 @@ const forceRenew = ref(0);
 const {renewFeeData , saveFeeData} = useFeeStore();
 
 const renewFeeDataTable = async() => {
-    if(confirm("작업을 취소하시겠습니까? ?")){
+    if(confirm("작업을 취소하시겠습니까 ?")){
         await renewFeeData();
+        forceRenew.value = forceRenew.value + 1;
+        alert("취소되었습니다.");
     }
-    forceRenew.value = forceRenew.value + 1;
-    alert("취소되었습니다.")
+
+
 }   
 
 const saveFeeDataTable = async() =>{

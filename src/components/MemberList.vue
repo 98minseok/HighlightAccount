@@ -16,6 +16,15 @@
             </tr>
         </tbody>
     </table>
+    <div class ="memberlist-search-div">
+        <select v-model="searchType">
+            <option value ="id">아이디</option>
+            <option value ="name">이름</option>
+        </select>
+        <input  @keydown.enter="clickSearch" v-model ="searchValue" type ="text">
+        <button @click ="clickSearch">검색</button>
+        <button @click ="clickReset">초기화</button>
+    </div>
     <div class="memberlist-button-div">
         <button @click ="page = num-1" :class="num-1 == page ? 'active' : ''" v-for ="num in listSize">{{ num }}</button>
     </div>
@@ -32,17 +41,26 @@
 import { useUserStore } from '@/store/user';
 import { computed, onMounted, ref } from 'vue';
 
-    const memberList = ref([])    
+    const memberList = ref([])
+    const filteredMemberList = ref([]);
     const page = ref(0)
-    const pagingList = computed(() => (memberList.value.slice(page.value*10,page.value*10+10)))
+    const pagingList = computed(() => (filteredMemberList.value.slice(page.value*10,page.value*10+10)))
+    const searchType = ref("id")
+    const searchValue = ref("")
     const {getUserData} = useUserStore();
     onMounted(async() => {
         memberList.value = await getUserData()
+        filteredMemberList.value = memberList.value;
     })
-    const listSize = computed(() => parseInt(memberList.value.length / 10))
+    const listSize = computed(() => parseInt(filteredMemberList.value.length / 10))
     const canNextPage = computed(() => page.value < listSize.value - 1)
     const canPrevPage = computed(() => page.value > 0)
-
+    const clickSearch = () => {
+        filteredMemberList.value = memberList.value.filter((e) => e[searchType.value].includes(searchValue.value))
+    }
+    const clickReset = () => {
+        filteredMemberList.value = memberList.value;
+    }
     const clickNextPage = () =>{
         if(canNextPage){
             page.value++;
@@ -61,9 +79,7 @@ import { computed, onMounted, ref } from 'vue';
     .memberlist-main{
         display: flex;
         flex-direction: column;
-        flex : 1;
         width: 100%;
-        overflow: scroll;
         padding : 50px;
         align-items: center;
         justify-content: center;
@@ -93,5 +109,13 @@ import { computed, onMounted, ref } from 'vue';
         background-color: beige;
         outline: none;
         border: none;
+    }
+    .memberlist-search-div{
+        display:flex;
+        gap: 10px;
+        margin-top : 10px;
+    }
+    .memberlist-search-div *{
+        padding : 10px;
     }
 </style>

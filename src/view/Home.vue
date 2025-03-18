@@ -5,6 +5,7 @@
                     <RouterLink active-class="home-nav-item-active" to="main"><li class ="home-nav-item">HOME</li></RouterLink>
                     <RouterLink active-class="home-nav-item-active" to="fee"><li class ="home-nav-item">회비 납부 현황</li></RouterLink>
                     <RouterLink active-class="home-nav-item-active" to="memberList"><li class ="home-nav-item">팀원 정보</li></RouterLink>
+                    <RouterLink active-class="home-nav-item-active" to="expense"><li class ="home-nav-item">지출 내역</li></RouterLink>
             </ul>
             <ul class ="home-nav-list">
                 <RouterLink to ="login"><li class ="home-nav-item">Logout</li></RouterLink>
