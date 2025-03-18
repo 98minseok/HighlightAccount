@@ -1,5 +1,7 @@
 <template>
+    <h1>팀원 정보</h1>
     <div class ="memberlist-main">
+
     <table class ="memberlist-table">
         <thead>
             <tr class ="memberlist-tr">
@@ -105,10 +107,11 @@ import { computed, onMounted, ref } from 'vue';
         cursor: pointer;
         border :none;
     }
+    .memberlist-button-div button:hover{
+        background-color: beige;
+    }
     .memberlist-button-div .active{
         background-color: beige;
-        outline: none;
-        border: none;
     }
     .memberlist-search-div{
         display:flex;

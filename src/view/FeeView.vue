@@ -16,6 +16,7 @@ onMounted(async() => {
 
 <template>
   <div class ="fee-main">
+    <h1>회비 납부 현황</h1>
       <FeeTable :userData = "userData"></FeeTable>
   </div>
 </template>
@@ -23,6 +24,7 @@ onMounted(async() => {
 <style scoped>
 .fee-main{
   display:flex;
+  flex:9;
   flex-direction: column;
   height: 100%;
   width: 100%;

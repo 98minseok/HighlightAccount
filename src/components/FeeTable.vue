@@ -3,6 +3,7 @@
         <button @click ="saveFeeDataTable">저장</button>
         <button @click ="renewFeeDataTable">되돌리기</button>
     </div>
+    <div class ="feetable-div">
     <table>
         <thead>
             <tr>
@@ -17,6 +18,7 @@
             <FeeRow v-for="user in userData" :key="user.userId" :user="user" />
         </tbody>
     </table>
+    </div>
 </template>
 
 <script setup>
@@ -64,10 +66,15 @@ const saveFeeDataTable = async() =>{
     }
     table,th,td{
         border-collapse: collapse;
-        border : 1px solid black;
+        border : 1px solid rgb(218, 218, 218);
     }
     th,td{
         padding : 10px;
         width : 100px;
+    }
+    .feetable-div{
+        height : 100%;
+        width : 100%;
+        overflow: scroll;
     }
 </style>

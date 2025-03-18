@@ -32,7 +32,7 @@ const onClickFeeCell = () => {
 </script>
 <style lang="css" scoped>
     .isPaid{
-        background-color: red;
+        background-color: rgb(191, 248, 255);
     }
     td{
         cursor: pointer;
