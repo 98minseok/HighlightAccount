@@ -34,11 +34,13 @@ const renewFeeDataTable = async() => {
         await renewFeeData();
     }
     forceRenew.value = forceRenew.value + 1;
-}
+    alert("취소되었습니다.")
+}   
 
 const saveFeeDataTable = async() =>{
     if(confirm("작업을 저장하시겠습니까 ?")){
         await saveFeeData();
+        alert("저장되었습니다.")
     }
 
 }

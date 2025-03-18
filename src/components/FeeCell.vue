@@ -1,6 +1,6 @@
 <template>
-    <td :class ="isPaidValue ? 'isPaid' : ''" @click = "onClickFeeCell">   
-    </td>
+        <td :class ="isPaidValue ? 'isPaid' : ''" @click = "onClickFeeCell">   
+        </td>
 </template>
 <script setup>
 import { useFeeStore } from '@/store/fee';
@@ -18,7 +18,6 @@ const {addFeeData,deleteFeeData} = useFeeStore();
 const isPaidValue = ref(props.isPaid)
 
 const onClickFeeCell = () => {
-    console.log(props , isPaidValue);
     if(isPaidValue.value){
         deleteFeeData(props.userId,props.month)
         isPaidValue.value = false

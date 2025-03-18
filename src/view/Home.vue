@@ -2,9 +2,9 @@
     <div class="home-main">
         <nav class ="home-nav">
             <ul class ="home-nav-list">
-                    <RouterLink to="/"><li class ="home-nav-item">HOME</li></RouterLink>
-                    <RouterLink to="fee"><li class ="home-nav-item">회비 납부 현황</li></RouterLink>
-                    <RouterLink to="memberList"><li class ="home-nav-item">팀원 정보</li></RouterLink>
+                    <RouterLink active-class="home-nav-item-active" to="main"><li class ="home-nav-item">HOME</li></RouterLink>
+                    <RouterLink active-class="home-nav-item-active" to="fee"><li class ="home-nav-item">회비 납부 현황</li></RouterLink>
+                    <RouterLink active-class="home-nav-item-active" to="memberList"><li class ="home-nav-item">팀원 정보</li></RouterLink>
             </ul>
             <ul class ="home-nav-list">
                 <RouterLink to ="login"><li class ="home-nav-item">Logout</li></RouterLink>
@@ -24,7 +24,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: 100%;
+        height: 100vh;
     }
     .home-nav{
         position : sticky;
@@ -33,7 +33,8 @@
         background-color: rgb(203, 255, 196);
         top:0px;
         display:flex;
-        padding : 10px
+        padding : 10px;
+        flex : 1;
     }
     .home-nav-list{
         list-style-type: none;
@@ -44,9 +45,12 @@
         border-radius: 5px;
     }
 
-    .home-nav-item:hover{
+    .home-nav-item:hover,
+    .home-nav-item-active{
         background-color: rgb(160, 255, 148);
+        font-weight : bold;
     }
+    
     .home-router{
         height:100%;
         width: 100%;

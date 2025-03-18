@@ -12,7 +12,8 @@ const routes = [
   { path : '/' , component : HomeView , children : [
     { path: '/fee', component: FeeView },
     { path: '/test', component: TestView },
-    { path: '/memberList', component : MemberList}
+    { path: '/memberList', component : MemberList},
+    { path: '/main' , component : Convert}
   ]},
   { path: '/login', component : Login},
   { path: '/convert', component : Convert},

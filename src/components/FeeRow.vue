@@ -1,8 +1,10 @@
 <template>
         <tr>
         <td align="center">{{ user.name }}</td>
-        <FeeCell @checkCell = "renewData" v-for="num in 12" :userId="user.id" :month ="num" :isPaid="checkIsPaid(num)"></FeeCell>
-        <td>{{ feeData.length * 15000}}</td>
+        <template v-if="feeDataValidation">
+            <FeeCell @checkCell = "renewData" v-for="num in 12" :userId="user.id" :month ="num" :isPaid="checkIsPaid(num)"></FeeCell>
+        </template>
+        <td align ="center">{{ (feeData.length * 15000).toLocaleString()}}</td>
     </tr>
 </template>
 
@@ -16,8 +18,10 @@ const props = defineProps({
 });
 const feeData = ref([])
 const {getFeeData} = useFeeStore();
-const renewData = () => {
-    feeData.value = getFeeData(props.user.id);
+const feeDataValidation = ref(false)
+const renewData = async() => {
+    feeData.value = await getFeeData(props.user.id);
+    feeDataValidation.value = true
 }
 const checkIsPaid = (month) => {
    return feeData.value.findIndex((e) => e.month == month) == -1 ? false : true
