@@ -3,6 +3,7 @@
         <button @click ="saveFeeDataTable">저장</button>
         <button @click ="renewFeeDataTable">되돌리기</button>
     </div>
+    <h1>2025년도</h1>
     <div class ="feetable-div">
     <table>
         <thead>
@@ -51,7 +52,7 @@ const saveFeeDataTable = async() =>{
 
 </script>
 
-<style>
+<style scoped>
     .feetable-button-div{
         display:flex;
         width:100%;
@@ -63,14 +64,6 @@ const saveFeeDataTable = async() =>{
     .feetable-button-div button{
         width : 5vw;
         padding : 0.3vw;
-    }
-    table,th,td{
-        border-collapse: collapse;
-        border : 1px solid rgb(218, 218, 218);
-    }
-    th,td{
-        padding : 10px;
-        width : 100px;
     }
     .feetable-div{
         height : 100%;

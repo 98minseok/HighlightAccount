@@ -15,7 +15,7 @@ export async function getAllMembers(){
 }
 
 export async function getAllFeePayments(){
-    const response =  await axios.get(createURL("feeinfo/list")).
+    const response =  await axios.get(createURL("feeinfo/list/2025")).
     then((response) => response.data)
     .catch((error) => error.response.data)
     return response

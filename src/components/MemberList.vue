@@ -86,16 +86,6 @@ import { computed, onMounted, ref } from 'vue';
         align-items: center;
         justify-content: center;
     }
-    .memberlist-table,
-    .memberlist-tr,
-    .memberlist-td,
-    .memberlist-th{
-        border-collapse: collapse;
-    }
-    .memberlist-td{
-        padding : 20px;
-        text-align: center;
-    }
     .memberlist-button-div{
         display:flex;
         margin-top : 10px;
