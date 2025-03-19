@@ -59,6 +59,7 @@
     justify-content: space-around;
     background-color: white;
     top: 0px;
+    z-index: 100;
     display: flex;
     padding: 10px;
 }

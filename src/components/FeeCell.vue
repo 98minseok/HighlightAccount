@@ -1,5 +1,5 @@
 <template>
-        <td :class ="isPaidValue ? 'isPaid' : ''" @click = "onClickFeeCell">   
+        <td :class ="[{'isPaid' : isPaidValue},{'non-data' : !isPaidValue && feeTableType == 'select'},{'have-data' : isPaidValue && feeTableType =='select'}]" @click = "onClickFeeCell">   
         </td>
 </template>
 <script setup>
@@ -14,20 +14,28 @@ const props = defineProps({
 
 const emit = defineEmits(['checkCell'])
 
-const {addFeeData,deleteFeeData} = useFeeStore();
+const {addFeeData,deleteFeeData,getFeeTableType} = useFeeStore();
 const isPaidValue = ref(props.isPaid)
-
+const feeTableType = ref(getFeeTableType());
 const onClickFeeCell = () => {
-    if(isPaidValue.value){
+
+    feeTableType.value = getFeeTableType();
+    if(feeTableType.value == "select" && isPaidValue.value){
+        alert(props.userId + " "  + props.month)
+    }
+    else if(feeTableType.value == "update"){
+        if(isPaidValue.value){
         deleteFeeData(props.userId,props.month)
         isPaidValue.value = false
         emit('checkCell')
     }
-    else{
-        addFeeData(props.userId,props.month);
-        isPaidValue.value = true
-        emit('checkCell')
+        else{
+            addFeeData(props.userId,props.month);
+            isPaidValue.value = true
+            emit('checkCell')
+        }
     }
+
 }
 </script>
 <style lang="css" scoped>
@@ -36,5 +44,11 @@ const onClickFeeCell = () => {
     }
     td{
         cursor: pointer;
+    }
+    .non-data{
+        cursor:default;
+    }
+    .have-data:hover{
+        background-color: rgb(151, 243, 255);
     }
 </style>

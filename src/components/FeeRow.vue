@@ -1,6 +1,6 @@
 <template>
         <tr>
-        <td align="center">{{ user.name }}({{ user.backNumber }})</td>
+        <td align="center">{{ user.name }}</td>
         <template v-if="feeDataValidation">
             <FeeCell @checkCell = "renewData" v-for="num in 12" :userId="user.id" :month ="num" :isPaid="checkIsPaid(num)"></FeeCell>
         </template>

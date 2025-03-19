@@ -58,9 +58,11 @@ import { computed, onMounted, ref } from 'vue';
     const canNextPage = computed(() => page.value < listSize.value - 1)
     const canPrevPage = computed(() => page.value > 0)
     const clickSearch = () => {
+        page.value = 0;
         filteredMemberList.value = memberList.value.filter((e) => e[searchType.value].includes(searchValue.value))
     }
     const clickReset = () => {
+        page.value = 0;
         filteredMemberList.value = memberList.value;
     }
     const clickNextPage = () =>{
@@ -109,6 +111,6 @@ import { computed, onMounted, ref } from 'vue';
         margin-top : 10px;
     }
     .memberlist-search-div *{
-        padding : 10px;
+        padding : 0.5vw;
     }
 </style>
