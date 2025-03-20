@@ -52,3 +52,10 @@ export async function updateFeeInfo(feeUpdateList){
     .catch((error) => error.response.data);
     return response
 }
+
+export async function getAllExpense(){
+    const response =  await axios.get(createURL("expense/list")).
+    then((response) => response.data)
+    .catch((error) => error.response.data)
+    return response
+}

@@ -28,8 +28,8 @@ import { onMounted, ref } from 'vue';
 
     const {getExpenseData} = useExpenseStore();
     const expenseData = ref([]);
-    onMounted(() => {
-        expenseData.value = getExpenseData();
+    onMounted(async() => {
+        expenseData.value = await getExpenseData();
     })
 </script>
 <style lang="css" scoped>    
