@@ -57,5 +57,14 @@ export async function getAllExpense(){
     const response =  await axios.get(createURL("expense/list")).
     then((response) => response.data)
     .catch((error) => error.response.data)
-    return response
+    return response 
+}
+
+export async function getExpenseByDate(request){
+    console.log(request);
+    const response =  await axios.post(createURL("expense/list"),request)
+    .then((response) => response.data)
+    .catch((error) => error.response.data)
+    console.log(response);
+    return response 
 }

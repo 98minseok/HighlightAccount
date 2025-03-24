@@ -1,4 +1,4 @@
-import { getAllExpense, getAllFeePayments, updateFeeInfo } from "@/api/api";
+import { getAllExpense, getAllFeePayments, getExpenseByDate, updateFeeInfo } from "@/api/api";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -11,5 +11,11 @@ export const useExpenseStore = defineStore('expense',() => {
         return expenseData.value
     }
 
-    return { getExpenseData}
+    const getExpenseDataByDate = async(request) => {
+        const response = await getExpenseByDate(request);
+        expenseData.value = response.data;
+        return expenseData.value
+    }
+
+    return { getExpenseData , getExpenseDataByDate}
 })

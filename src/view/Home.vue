@@ -33,6 +33,8 @@
         let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
         const homeNav = document.querySelector(".home-nav");
         
+
+        // 스크롤이 내려가면 nav-bar의 클래스 추가
         if(scrollLocation > 50){
             if(!homeNav.classList.contains("home-nav-scrolled")){
                 homeNav.classList.add("home-nav-scrolled")
