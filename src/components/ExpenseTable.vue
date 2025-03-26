@@ -24,27 +24,36 @@
             <tbody>
                 <tr v-for="expense in expenseData" :key="expense.id">
                     <td>{{ expense.date }}</td>
-                    <td style="width: 50vh;">{{ expense.content }}</td>
+                    <td style="width: 50vh;"><span class ="expense-table-content" @click ="clickContent(expense.id)">{{ expense.content }}</span></td>
                     <td>{{ expense.cost }}</td>
                     <td>{{ expense.balance }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <ExpenseModal :imageData="imageData"></ExpenseModal>
 </template>
 
 <script setup>
 import { getExpenseByDate } from '@/api/api';
 import { useExpenseStore } from '@/store/expense';
-import { onMounted, ref } from 'vue';
+import { onMounted, provide, ref } from 'vue';
+import ExpenseModal from './ExpenseModal.vue';
 
 const startDate = ref("");
 const endDate = ref("");
 const expenseData = ref([]);
-const expenseStore = useExpenseStore();
+const {getExpenseData,getImagesByExpenseId} = useExpenseStore();
+const openModal = ref(false)
+const imageData = ref([])
 
+const clickContent = (expenseId) => {
+    openModal.value = true;
+    imageData.value = getImagesByExpenseId(expenseId);
+}
+provide("openModal",openModal);
 const fetchInitialData = async () => {
-    expenseData.value = await expenseStore.getExpenseData();
+    expenseData.value = await getExpenseData();
 };
 
 onMounted(fetchInitialData);
@@ -95,5 +104,11 @@ const searchExpenseByDate = async () => {
 }
 .date-container button {
     margin: auto 0;
+}
+.expense-table-content{
+    cursor: pointer;
+}
+.expense-table-content:hover{
+    color : rgb(185, 185, 185)
 }
 </style>

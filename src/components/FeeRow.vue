@@ -2,7 +2,7 @@
         <tr>
         <td align="center">{{ user.name }}</td>
         <template v-if="feeDataValidation">
-            <FeeCell @checkCell = "renewData" v-for="num in 12" :feeData="cellFeeData(num)" :userId="user.userId" :month = "num" :isPaid="checkIsPaid(num)"></FeeCell>
+            <FeeCell @checkCell = "renewData" v-for="num in 12" :feeData="cellFeeData(num)" :userId="user.id" :month = "num" :isPaid="checkIsPaid(num)"></FeeCell>
         </template>
         <td align ="center">{{ (feeData.length * 15000).toLocaleString()}}</td>
     </tr>

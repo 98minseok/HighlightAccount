@@ -1,40 +1,49 @@
-function solution(comments) {
-    // 1. 모든 댓글을 id로 매핑하고 children 배열 추가
-    const commentMap = {};
-    comments = comments.map(e => ({ ...e, children: [] }));
-    comments.forEach(e => {
-        commentMap[e.id] = e;
-    });
+class MinHeap{
 
-    // 2. 부모-자식 관계 연결
-    comments.forEach(e => {
-        if (e.parentId !== null) {
-            commentMap[e.parentId].children.push(e);
-        }
-    });
-
-    // 3. 최상위 노드만 결과에 추가
-    const result = comments.filter(e => e.parentId === null);
-
-    // 4. DFS로 content 출력 (보너스 요구사항)
-    function printDFS(node) {
-        console.log(node.content);
-        node.children.forEach(child => printDFS(child));
+    constructor(){
+        this.heap = [];
     }
-    console.log("DFS 순회 결과:");
-    result.forEach(node => printDFS(node));
 
-    return result;
+    push(value){
+        this.heap.push(value);
+        this.heapifyUp();
+    }
+
+    heapifyUp(){
+        let index = this.heap.length -1;
+        while (index > 0){
+            let parentIndex = Math.floor((index-1) / 2);
+            if (this.heap[parentIndex] <= this.heap[index]) break;
+            [this.heap[parentIndex],this.heap[index]] = [this.heap[index],this.heap[parentIndex]];
+            index = parentIndex;
+        }
+    }
+
+    pop(){
+        if (this.heap.length === 0) return null;
+        if (this.heap.length === 1) return this.heap.pop();
+
+        const root = this.heap[0];
+        this.heap[0] = this.heap.pop();
+        this.heapifyDown();
+        return root;
+    }
+
+    heapifyDown(){
+        let index = 0;
+        const length = this.heap.length;
+
+        while(true){
+            let smallest = index;
+            let left = 2* index+1;
+            let right = 2* index+2;
+
+            if(left < length && this.heap[left] < this.heap[smallest]) smallest = left;
+            if(right < length && this.heap[right] < this.heap[smallest]) smallest = right;
+
+            if (smallest === index) break;
+            [this.heap[index] , this.heap[smallest]] = [this.heap[smallest], this.heap[index]]
+            index = smallest;
+        }
+    }
 }
-
-// 테스트
-const comments = [
-    { id: 1, content: "안녕하세요!", parentId: null },
-    { id: 2, content: "좋은 글이네요.", parentId: null },
-    { id: 3, content: "반갑습니다!", parentId: 1 },
-    { id: 4, content: "저도そう思います!", parentId: 2 },
-    { id: 5, content: "네, 맞아요.", parentId: 3 },
-];
-
-const tree = solution(comments);
-console.log("트리 구조:", JSON.stringify(tree, null, 2));

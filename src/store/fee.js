@@ -46,6 +46,7 @@ export const useFeeStore = defineStore('fee',() => {
     }
 
     const saveFeeData = async() => {
+        console.log(feeUpdateList);
         const response = await updateFeeInfo(feeUpdateList);
         console.log(response);
     }

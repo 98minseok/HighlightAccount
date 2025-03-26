@@ -73,7 +73,7 @@ import { computed, onMounted, ref } from 'vue';
     const clickPrevPage = () =>{
         if(canPrevPage){
             page.value--;
-        }
+        }   
     }
     const sortMemberList = (type) => {
         console.log(type);
