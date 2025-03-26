@@ -4,24 +4,25 @@
 </template>
 <script setup>
 import { useFeeStore } from '@/store/fee';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 
 const props = defineProps({
     isPaid : Boolean,
     month : Number,
     userId : String,
+    feeData : Object,
 })
 
 const emit = defineEmits(['checkCell'])
-
-const {addFeeData,deleteFeeData,getFeeTableType} = useFeeStore();
+const openModal = inject("openModal");
+const {addFeeData,deleteFeeData,getFeeTableType,setSelectFee,getSelectFee} = useFeeStore();
 const isPaidValue = ref(props.isPaid)
 const feeTableType = ref(getFeeTableType());
 const onClickFeeCell = () => {
-
     feeTableType.value = getFeeTableType();
     if(feeTableType.value == "select" && isPaidValue.value){
-        alert(props.userId + " "  + props.month)
+        setSelectFee(props.feeData);
+        openModal.value = true;
     }
     else if(feeTableType.value == "update"){
         if(isPaidValue.value){

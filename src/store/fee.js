@@ -5,6 +5,8 @@ import { ref } from "vue";
 export const useFeeStore = defineStore('fee',() => {
     const feeData = ref([]);
     const feeTableType = ref("select");
+    const selectFeeData = ref({});
+
     let feeUpdateList = [];
 
     const renewFeeData = async() => {
@@ -60,5 +62,13 @@ export const useFeeStore = defineStore('fee',() => {
     const getFeeTableType = () => {
         return feeTableType.value;
     }
-    return { getFeeData , addFeeData , deleteFeeData , renewFeeData ,saveFeeData , toggleFeeType , getFeeTableType}
+
+    const setSelectFee = (value) => {
+        selectFeeData.value = value;
+    }
+
+    const getSelectFee = () => {
+        return selectFeeData.value;
+    }
+    return { getFeeData , addFeeData , deleteFeeData , renewFeeData ,saveFeeData , toggleFeeType , getFeeTableType , setSelectFee , getSelectFee, selectFeeData}
 })

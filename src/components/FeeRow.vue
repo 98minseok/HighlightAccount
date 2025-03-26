@@ -2,7 +2,7 @@
         <tr>
         <td align="center">{{ user.name }}</td>
         <template v-if="feeDataValidation">
-            <FeeCell @checkCell = "renewData" v-for="num in 12" :userId="user.id" :month ="num" :isPaid="checkIsPaid(num)"></FeeCell>
+            <FeeCell @checkCell = "renewData" v-for="num in 12" :feeData="cellFeeData(num)" :userId="user.userId" :month = "num" :isPaid="checkIsPaid(num)"></FeeCell>
         </template>
         <td align ="center">{{ (feeData.length * 15000).toLocaleString()}}</td>
     </tr>
@@ -25,6 +25,10 @@ const renewData = async() => {
 }
 const checkIsPaid = (month) => {
    return feeData.value.findIndex((e) => e.month == month) == -1 ? false : true
+}
+
+const cellFeeData = (month) => {
+    return feeData.value.find((e) => e.month == month)
 }
 onBeforeMount(() => {
     renewData();

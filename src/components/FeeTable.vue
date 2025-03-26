@@ -21,18 +21,22 @@
         </tbody>
     </table>
     </div>
+    <FeeInfoModal></FeeInfoModal>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 import FeeRow from './FeeRow.vue';
 import { useFeeStore } from '@/store/fee';
+import FeeInfoModal from './FeeInfoModal.vue';
 defineProps({
     userData : Array
 })
 const forceRenew = ref(0);
 const {renewFeeData , saveFeeData , toggleFeeType , getFeeTableType} = useFeeStore();
 const feeTableType = ref("");
+const openModal = ref(false);
+provide("openModal",openModal)
 
 onMounted(() => {
     feeTableType.value = getFeeTableType();
