@@ -9,6 +9,7 @@ export const useUserStore = defineStore('user',() => {
     const getUserData = async() => {
         const response = await getAllMembers();
         userData.value = response.data;
+        console.log(userData.value);    
         return userData.value;
     }
     return { getUserData }

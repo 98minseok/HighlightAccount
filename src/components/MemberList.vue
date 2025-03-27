@@ -8,6 +8,9 @@
                 <th @click ="sortMemberList('id')" class ="memberlist-th">아이디 {{ sortMark('id') }}</th>
                 <th @click ="sortMemberList('name')" class ="memberlist-th">이름 {{ sortMark('name') }}</th>
                 <th @click ="sortMemberList('backNumber')" class ="memberlist-th">등번호 {{ sortMark('backNumber')}}</th>
+                <th @click ="sortMemberList('email')" class ="memberlist-th">이메일 {{ sortMark('email') }}</th>
+                <th @click ="sortMemberList('address')" class ="memberlist-th">주소 {{ sortMark('address') }}</th>
+                <th @click ="sortMemberList('birthDate')" class ="memberlist-th">생일 {{ sortMark('birthDate')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +18,9 @@
                 <td class ="memberlist-td">{{ member.id }}</td>
                 <td class ="memberlist-td">{{ member.name }}</td>
                 <td class ="memberlist-td">{{ member.backNumber }}</td>
+                <td class ="memberlist-td">{{ member.email }}</td>
+                <td class ="memberlist-td">{{ member.address }}</td>
+                <td class ="memberlist-td">{{ member.birthDate }}</td>
             </tr>
         </tbody>
     </table>

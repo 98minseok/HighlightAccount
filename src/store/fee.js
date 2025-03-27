@@ -6,7 +6,7 @@ export const useFeeStore = defineStore('fee',() => {
     const feeData = ref([]);
     const feeTableType = ref("select");
     const selectFeeData = ref({});
-
+    const selectYear = ref(new Date().getFullYear());
     let feeUpdateList = [];
 
     const renewFeeData = async() => {
@@ -23,32 +23,34 @@ export const useFeeStore = defineStore('fee',() => {
         feeData.value.push({
             id : feeData.value.length + 1,
             memberId : memberId,    
-            month : month
+            month : month,
+            year : selectYear.value
         })
-        feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month));
+        feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month && e.year === selectYear.value));
         feeUpdateList.push({
             memberId : memberId,
             month : month,
+            year : selectYear.value,
             type : "add"
         })
         console.log(feeUpdateList);
     }
 
     const deleteFeeData = (memberId,month) => {
-        feeData.value = feeData.value.filter((e) => !(e.memberId == memberId && e.month == month))
-        feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month));
+        feeData.value = feeData.value.filter((e) => !(e.memberId == memberId && e.month == month && e.year === selectYear.value))
+        feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month && e.year === selectYear.value));
         feeUpdateList.push({
             memberId : memberId,
             month : month,
+            year : selectYear.value,
             type : "delete"
         })
         console.log(feeUpdateList);
     }
 
     const saveFeeData = async() => {
-        console.log(feeUpdateList);
         const response = await updateFeeInfo(feeUpdateList);
-        console.log(response);
+        renewFeeData();
     }
 
     const toggleFeeType = () => {
@@ -56,6 +58,10 @@ export const useFeeStore = defineStore('fee',() => {
             feeTableType.value = "update"
         }
         else{
+            if(feeUpdateList.length > 0){
+                alert("수정중인 작업이 있습니다. 마무리 하고 다시 시도해주세요.")
+                return;
+            }
             feeTableType.value = "select"
         }
     }

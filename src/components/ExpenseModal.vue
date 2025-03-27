@@ -47,10 +47,13 @@ watch(open, (newValue) => {
 }
 .modal-div ul{
     list-style-type: none;
+    height:100%;
 }
 
 .modal-div li{
     padding : 10px;
+    min-height: 100px;
+    max-height: 100px;
     border : 1px solid black;
     border-collapse: collapse;
 }

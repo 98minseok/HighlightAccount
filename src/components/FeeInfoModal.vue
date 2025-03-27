@@ -3,13 +3,31 @@
         <h2>납부정보    </h2>
         <div class ="modal-div">
             <ul>
-                <li v-for="key in Object.keys(selectFeeData)">
-                    {{ key }}
+                <li>
+                    아이디
+                </li>
+                <li>
+                    이름
+                </li>
+                <li>
+                    납입 일자
+                </li>
+                <li>
+                    금액
                 </li>
             </ul>
             <ul>
-                <li v-for="value in Object.values(selectFeeData)">
-                    {{ value }}
+                <li>
+                    {{ selectFeeData.memberId }}
+                </li>
+                <li>
+                    {{ selectFeeData.memberName || "이름없음" }}
+                </li>
+                <li>
+                    {{ selectFeeData.feeDate }}
+                </li>
+                <li>
+                    {{ selectFeeData.amount.toLocaleString() }}
                 </li>
             </ul>
         </div>

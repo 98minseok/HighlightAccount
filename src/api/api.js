@@ -68,3 +68,10 @@ export async function getExpenseByDate(request){
     console.log(response);
     return response 
 }
+
+export async function getExpenseImage(){
+    const response =  await axios.get(createURL("expense/image")).
+    then((response) => response.data)
+    .catch((error) => error.response.data)
+    return response 
+}

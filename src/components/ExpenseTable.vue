@@ -43,17 +43,20 @@ import ExpenseModal from './ExpenseModal.vue';
 const startDate = ref("");
 const endDate = ref("");
 const expenseData = ref([]);
-const {getExpenseData,getImagesByExpenseId} = useExpenseStore();
+const {getExpenseData,getImagesByExpenseId,getExpenseImageData} = useExpenseStore();
 const openModal = ref(false)
 const imageData = ref([])
 
 const clickContent = (expenseId) => {
-    openModal.value = true;
     imageData.value = getImagesByExpenseId(expenseId);
+    if(imageData.value.length > 0){
+        openModal.value = true;
+    }
 }
 provide("openModal",openModal);
 const fetchInitialData = async () => {
     expenseData.value = await getExpenseData();
+    await getExpenseImageData();
 };
 
 onMounted(fetchInitialData);
@@ -89,8 +92,8 @@ const searchExpenseByDate = async () => {
 .expense-table-div {
     display: flex;
     justify-content: center;
-    height: 100%;
     width: 100%;
+    max-height: 80vh;
     overflow: scroll;
 }
 .date-container {

@@ -1,4 +1,4 @@
-import { getAllExpense, getAllFeePayments, getExpenseByDate, updateFeeInfo } from "@/api/api";
+import { getAllExpense,  getExpenseByDate, getExpenseImage } from "@/api/api";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -26,12 +26,18 @@ export const useExpenseStore = defineStore('expense',() => {
         { id: 19, expenseId: 16, image: "/image19.jpg" },
         { id: 20, expenseId: 17, image: "/image20.jpg" },
     ]);
+
     const getExpenseData = async() =>{
         const response = await getAllExpense();
         expenseData.value = response.data;
         return expenseData.value
     }
 
+    const getExpenseImageData = async() => {
+        const response = await getExpenseImage();
+        expenseImageData.value = response.data;
+        return expenseImageData.value;
+    }
     const getExpenseDataByDate = async(request) => {
         const response = await getExpenseByDate(request);
         expenseData.value = response.data;
@@ -41,5 +47,5 @@ export const useExpenseStore = defineStore('expense',() => {
     const getImagesByExpenseId = (expenseId) => {
         return expenseImageData.value.filter((data) => data.expenseId == expenseId)
     }
-    return { getExpenseData , getExpenseDataByDate , getImagesByExpenseId}
+    return { getExpenseData , getExpenseDataByDate , getImagesByExpenseId ,getExpenseImageData}
 })
