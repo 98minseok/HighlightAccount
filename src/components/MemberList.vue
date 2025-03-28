@@ -1,7 +1,10 @@
 <template>
-    <h1>팀원 정보</h1>
-    <div class ="memberlist-main">
+    <div class ="top-row">    
+        <h1>팀원 정보</h1>
+        <button>회원 추가</button>
+    </div>
 
+    <div class ="memberlist-main">
     <table class ="memberlist-table">
         <thead>
             <tr class ="memberlist-tr">
@@ -11,6 +14,7 @@
                 <th @click ="sortMemberList('email')" class ="memberlist-th">이메일 {{ sortMark('email') }}</th>
                 <th @click ="sortMemberList('address')" class ="memberlist-th">주소 {{ sortMark('address') }}</th>
                 <th @click ="sortMemberList('birthDate')" class ="memberlist-th">생일 {{ sortMark('birthDate')}}</th>
+                <th>관리하기</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +25,12 @@
                 <td class ="memberlist-td">{{ member.email }}</td>
                 <td class ="memberlist-td">{{ member.address }}</td>
                 <td class ="memberlist-td">{{ member.birthDate }}</td>
+                <td>
+                    <div class ="td-button-div">
+                        <button>수정</button>
+                        <button>삭제</button>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -47,6 +57,7 @@
 <script setup>
 import { useUserStore } from '@/store/user';
 import { computed, onMounted, ref } from 'vue';
+import MemberModal from './MemberModal.vue';
 
     const memberList = ref([])
     const filteredMemberList = ref([]);
@@ -145,6 +156,9 @@ import { computed, onMounted, ref } from 'vue';
         align-items: center;
         justify-content: center;
     }
+    .memberlist-table{
+        height:100vh;
+    }
     .memberlist-button-div{
         display:flex;
         margin-top : 10px;
@@ -172,5 +186,24 @@ import { computed, onMounted, ref } from 'vue';
     }
     .memberlist-tr th{
         cursor: pointer;
+    }
+    .td-button-div{
+        display: flex;
+        width:100%;
+        height:100%;
+        align-items: center;
+        justify-content: center;
+        gap:20px;
+    }
+    .td-button-div button{
+        padding:0px 10px;
+    }
+    .top-row{
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .top-row button{
+        padding : 0px 10px;
     }
 </style>

@@ -75,3 +75,10 @@ export async function getExpenseImage(){
     .catch((error) => error.response.data)
     return response 
 }
+
+export async function deleteMember(){
+    const response = (await axios.delete(createURL("member/list")))
+    then((response) => response.data)
+    .catch((error) => error.response.data)
+    return response 
+}
