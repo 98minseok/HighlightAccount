@@ -4,7 +4,7 @@
 </template>
 <script setup>
 import { useFeeStore } from '@/store/fee';
-import { inject, ref } from 'vue';
+import { inject, onMounted, ref } from 'vue';
 
 const props = defineProps({
     isPaid : Boolean,
@@ -19,6 +19,7 @@ const {addFeeData,deleteFeeData,getFeeTableType,setSelectFee,getSelectFee} = use
 const isPaidValue = ref(props.isPaid)
 const feeTableType = ref(getFeeTableType());
 const onClickFeeCell = () => {
+
     feeTableType.value = getFeeTableType();
     if(feeTableType.value == "select" && isPaidValue.value){
         setSelectFee(props.feeData);

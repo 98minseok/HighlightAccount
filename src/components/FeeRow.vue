@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import FeeCell from './FeeCell.vue';
 import { useFeeStore } from '@/store/fee';
 // 부모로부터 user 데이터를 props로 받기
@@ -30,8 +30,8 @@ const checkIsPaid = (month) => {
 const cellFeeData = (month) => {
     return feeData.value.find((e) => e.month == month)
 }
-onBeforeMount(() => {
-    renewData();
+onMounted(async() => {
+    await renewData();
 })
 </script>
 

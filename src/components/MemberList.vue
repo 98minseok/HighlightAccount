@@ -157,7 +157,7 @@ import MemberModal from './MemberModal.vue';
         justify-content: center;
     }
     .memberlist-table{
-        height:100vh;
+        max-height:50vh;
     }
     .memberlist-button-div{
         display:flex;
@@ -184,8 +184,14 @@ import MemberModal from './MemberModal.vue';
     .memberlist-search-div *{
         padding : 0.5vw;
     }
+    .memberlist-tr{
+        height:50px;
+    }
     .memberlist-tr th{
         cursor: pointer;
+    }
+    .memberlist-td{
+        height:10px;
     }
     .td-button-div{
         display: flex;

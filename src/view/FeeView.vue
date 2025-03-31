@@ -15,6 +15,7 @@ onMounted(async() => {
 </script>
 
 <template>
+
   <div class ="fee-main">
     <h1>회비 납부 현황</h1>
       <FeeTable :userData = "userData"></FeeTable>

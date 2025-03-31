@@ -14,8 +14,8 @@ export const useFeeStore = defineStore('fee',() => {
         feeData.value = response.data;
         feeUpdateList = [];
     }
-    renewFeeData();
-    const getFeeData = (memberId) => {
+    const getFeeData = async(memberId) => {
+        await renewFeeData();
         return feeData.value.filter((e) => e.memberId == memberId)
     }
     
