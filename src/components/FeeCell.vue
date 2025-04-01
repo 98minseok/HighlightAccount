@@ -9,17 +9,16 @@ import { inject, onMounted, ref } from 'vue';
 const props = defineProps({
     isPaid : Boolean,
     month : Number,
-    userId : String,
+    userId : Number,
     feeData : Object,
 })
 
 const emit = defineEmits(['checkCell'])
 const openModal = inject("openModal");
-const {addFeeData,deleteFeeData,getFeeTableType,setSelectFee,getSelectFee} = useFeeStore();
+const {addFeeData,deleteFeeData,getFeeTableType,setSelectFee,renewFeeData} = useFeeStore();
 const isPaidValue = ref(props.isPaid)
 const feeTableType = ref(getFeeTableType());
 const onClickFeeCell = () => {
-
     feeTableType.value = getFeeTableType();
     if(feeTableType.value == "select" && isPaidValue.value){
         setSelectFee(props.feeData);
@@ -37,8 +36,8 @@ const onClickFeeCell = () => {
             emit('checkCell')
         }
     }
-
 }
+
 </script>
 <style lang="css" scoped>
     .isPaid{

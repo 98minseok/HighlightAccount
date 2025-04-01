@@ -23,7 +23,7 @@ export async function getAllFeePayments(){
 
 export async function loginValidation(id,pwd) {
 
-    const response = await axios.post(createURL('member/login'),{
+    const response = await axios.post(createURL('user/login'),{
         id : id,
         pwd : pwd,
     }).then((response) => response.data)
@@ -32,8 +32,8 @@ export async function loginValidation(id,pwd) {
 }
 
 
-export async function insertMember(id,pwd){
-    const response = await axios.post(createURL('member/register'),{
+export async function insertUser(id,pwd){
+    const response = await axios.post(createURL('user/register'),{
         id : id,
         pwd : pwd,
     }).then((response) => response.data)
@@ -81,4 +81,11 @@ export async function deleteMember(){
     then((response) => response.data)
     .catch((error) => error.response.data)
     return response 
+}
+
+export async function insertMember(member){
+    const response = await axios.post(createURL('member'),member)
+    .then((response) => response.data)
+    .catch((error) => error.response.data);
+    return response
 }

@@ -15,7 +15,6 @@ export const useFeeStore = defineStore('fee',() => {
         feeUpdateList = [];
     }
     const getFeeData = async(memberId) => {
-        await renewFeeData();
         return feeData.value.filter((e) => e.memberId == memberId)
     }
     
@@ -33,7 +32,8 @@ export const useFeeStore = defineStore('fee',() => {
             year : selectYear.value,
             type : "add"
         })
-        console.log(feeUpdateList);
+        console.log(feeUpdateList , feeUpdateList.length);
+        console.log(feeData.value , feeData.value.length);
     }
 
     const deleteFeeData = (memberId,month) => {
@@ -46,6 +46,7 @@ export const useFeeStore = defineStore('fee',() => {
             type : "delete"
         })
         console.log(feeUpdateList);
+        console.log(feeData.value);
     }
 
     const saveFeeData = async() => {

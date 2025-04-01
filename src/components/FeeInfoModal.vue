@@ -60,7 +60,7 @@ watch(open, (newValue) => {
   justify-content: center;
   flex-direction: column;
   gap : 10px;
-  z-index: 999;
+  z-index: 999;     
   top: 20%;
   left: 50%;
   width: 400px;

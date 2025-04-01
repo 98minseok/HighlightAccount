@@ -1,13 +1,16 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, onUpdated, ref } from 'vue';
 import FeeTable from '@/components/FeeTable.vue';
 import { useUserStore } from '@/store/user'; 
 import { useFeeStore } from '@/store/fee';
 
 const { getUserData } = useUserStore();
-const { getFeeData } = useFeeStore();
+const { getFeeData,renewFeeData } = useFeeStore();
 const userData = ref([]);
 const feeData = ref([]);
+onBeforeMount(async() => {
+  await renewFeeData();
+})
 onMounted(async() => {
   userData.value = await(getUserData())
 })

@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import {insertMember, loginValidation } from '@/api/api';
+import {insertUser} from '@/api/api';
 import router from '@/router';
 import { onMounted, ref, useTemplateRef, watch } from 'vue';
     const inputId = ref('')
@@ -39,7 +39,7 @@ import { onMounted, ref, useTemplateRef, watch } from 'vue';
         }
     }
     const register = async() => {
-        const response = await insertMember(inputId.value,inputPwd.value);
+        const response = await insertUser(inputId.value,inputPwd.value);
         const status = response.status;
         const message = response.message;
         switch(status){

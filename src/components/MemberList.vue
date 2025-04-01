@@ -1,7 +1,7 @@
 <template>
     <div class ="top-row">    
         <h1>팀원 정보</h1>
-        <button>회원 추가</button>
+        <button @click="onInsertMember = !onInsertMember">{{ onInsertMember ? "취소" : "회원 추가" }}</button>
     </div>
 
     <div class ="memberlist-main">
@@ -18,8 +18,21 @@
             </tr>
         </thead>
         <tbody>
+            <tr v-if ="onInsertMember" align="center" class ="memberlist-tr">
+                <td class ="memberlist-td">회원이 직접 등록</td>
+                <td class ="memberlist-td"><input type="text" v-model="newMember.name"></td>
+                <td class ="memberlist-td"><input type="number" v-model="newMember.backNumber"></td>
+                <td class ="memberlist-td"><input type="email" v-model="newMember.email"></td>
+                <td class ="memberlist-td"><input type="text" v-model="newMember.address"></td>
+                <td class ="memberlist-td"><input type="date" v-model="newMember.birthDate"></td>   
+                <td style="width:150px;">
+                    <div class ="td-button-div">
+                        <button @click ="clickSaveMember">저장</button>
+                    </div>
+                </td>   
+            </tr>
             <tr class ="memberlist-tr" v-for ="member in pagingList" :key = "member.id">
-                <td class ="memberlist-td">{{ member.id }}</td>
+                <td class ="memberlist-td">{{ member.userId }}</td>
                 <td class ="memberlist-td">{{ member.name }}</td>
                 <td class ="memberlist-td">{{ member.backNumber }}</td>
                 <td class ="memberlist-td">{{ member.email }}</td>
@@ -58,6 +71,7 @@
 import { useUserStore } from '@/store/user';
 import { computed, onMounted, ref } from 'vue';
 import MemberModal from './MemberModal.vue';
+import { insertMember } from '@/api/api';
 
     const memberList = ref([])
     const filteredMemberList = ref([]);
@@ -67,11 +81,20 @@ import MemberModal from './MemberModal.vue';
     const searchValue = ref("")
     const sortedType = ref("");
     const {getUserData} = useUserStore();
+    const onInsertMember = ref(false);
+    const newMember = ref({
+        id : "",
+        name : "",
+        backNumber : "",
+        email : "",
+        address : "",
+        birthDate : "",
+    });
     onMounted(async() => {
         memberList.value = await getUserData()
         filteredMemberList.value = memberList.value;
     })
-    const listSize = computed(() => parseInt(filteredMemberList.value.length / 10))
+    const listSize = computed(() => Math.ceil(filteredMemberList.value.length / 10))
     const canNextPage = computed(() => page.value < listSize.value - 1)
     const canPrevPage = computed(() => page.value > 0)
     const clickSearch = () => {
@@ -113,6 +136,15 @@ import MemberModal from './MemberModal.vue';
 
     const sortMark = (type) => {
         return sortedType.value.includes(type) ? sortedType.value.includes('asc') ? '▲' : '▼' : '' 
+    }
+
+    const clickSaveMember = async() => {
+        const response = await insertMember(newMember.value);
+        onInsertMember.value = false;
+        memberList.value = await getUserData()
+
+        alert(response.message);
+        filteredMemberList.value = memberList.value;    
     }
 
     function exportArrayToExcel() {

@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody :key = "forceRenew">
-            <FeeRow v-for="user in userData" :key="user.userId" :user="user" />
+            <FeeRow v-for="user in userData" :key="user.id" :user="user" />
         </tbody>
     </table>
     </div>
