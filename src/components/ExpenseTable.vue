@@ -10,6 +10,7 @@
         </div>
         <button type="button" @click="searchExpenseByDate">조회하기</button>
         <button type="button" @click="searchExpense">초기화</button>
+        <button type="button" @click="insertExpense">등록하기</button>
     </div>
     <div class="expense-table-div">
         <table>
@@ -32,6 +33,7 @@
         </table>
     </div>
     <ExpenseModal :imageData="imageData"></ExpenseModal>
+    <ExpenseInsertModal></ExpenseInsertModal>
 </template>
 
 <script setup>
@@ -39,21 +41,24 @@ import { getExpenseByDate } from '@/api/api';
 import { useExpenseStore } from '@/store/expense';
 import { onMounted, provide, ref } from 'vue';
 import ExpenseModal from './ExpenseModal.vue';
+import ExpenseInsertModal from './ExpenseInsertModal.vue';
 
 const startDate = ref("");
 const endDate = ref("");
 const expenseData = ref([]);
 const {getExpenseData,getImagesByExpenseId,getExpenseImageData} = useExpenseStore();
-const openModal = ref(false)
+const openImageModal = ref(false)
+const openInsertModal = ref(false);
 const imageData = ref([])
 
 const clickContent = (expenseId) => {
     imageData.value = getImagesByExpenseId(expenseId);
     if(imageData.value.length > 0){
-        openModal.value = true;
+        openImageModal.value = true;
     }
 }
-provide("openModal",openModal);
+provide("openImageModal",openImageModal);
+provide("openInsertModal",openInsertModal);
 const fetchInitialData = async () => {
     expenseData.value = await getExpenseData();
     await getExpenseImageData();
@@ -65,6 +70,10 @@ const searchExpense = async () => {
     await fetchInitialData();
     alert("초기화되었습니다.");
 };
+
+const insertExpense = async() => {
+    openInsertModal.value = true;
+}
 
 const searchExpenseByDate = async () => {
     if (!startDate.value || !endDate.value) {

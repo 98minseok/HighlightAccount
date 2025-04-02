@@ -4,88 +4,121 @@ const createURL = (url) => {
     return "http://localhost:8080/" + url;
 }
 
-export async function getAllMembers(){
-
-    const response =  await axios.get(createURL("member/list")).
-    then((response) => response.data)
-    .catch((error) => error.response.data)
-
-    console.log(response);
-    return response
+export async function getAllMembers() {
+    try {
+        const response = await axios.get(createURL("member/list"));
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function getAllFeePayments(){
-    const response =  await axios.get(createURL("feeinfo/list/2025")).
-    then((response) => response.data)
-    .catch((error) => error.response.data)
-    return response
+export async function getAllFeePayments() {
+    try {
+        const response = await axios.get(createURL("feeinfo/list/2025"));
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function loginValidation(id,pwd) {
-
-    const response = await axios.post(createURL('user/login'),{
-        id : id,
-        pwd : pwd,
-    }).then((response) => response.data)
-    .catch((error) => error.response.data);
-    return response;
+export async function loginValidation(id, pwd) {
+    try {
+        const response = await axios.post(createURL('user/login'), {
+            id: id,
+            pwd: pwd,
+        });
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-
-export async function insertUser(id,pwd){
-    const response = await axios.post(createURL('user/register'),{
-        id : id,
-        pwd : pwd,
-    }).then((response) => response.data)
-    .catch((error) => error.response.data);
-    return response
+export async function insertUser(id, pwd) {
+    try {
+        const response = await axios.post(createURL('user/register'), {
+            id: id,
+            pwd: pwd,
+        });
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function updateFeeInfo(feeUpdateList){
-    console.log(feeUpdateList);
-    const response = await axios.post(createURL('feeinfo/list'),feeUpdateList,
-    {
-        headers :{
-            "Content-Type" : "application/json"
-        } 
-    }).then((response) => response.data)
-    .catch((error) => error.response.data);
-    return response
+export async function updateFeeInfo(feeUpdateList) {
+    try {
+        const response = await axios.post(createURL('feeinfo/list'), feeUpdateList, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function getAllExpense(){
-    const response =  await axios.get(createURL("expense/list")).
-    then((response) => response.data)
-    .catch((error) => error.response.data)
-    return response 
+export async function getAllExpense() {
+    try {
+        const response = await axios.get(createURL("expense/list"));
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function getExpenseByDate(request){
-    console.log(request);
-    const response =  await axios.post(createURL("expense/list"),request)
-    .then((response) => response.data)
-    .catch((error) => error.response.data)
-    console.log(response);
-    return response 
+export async function getExpenseByDate(request) {
+    try {
+        const response = await axios.post(createURL("expense/list"), request);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function getExpenseImage(){
-    const response =  await axios.get(createURL("expense/image")).
-    then((response) => response.data)
-    .catch((error) => error.response.data)
-    return response 
+export async function getExpenseImage() {
+    try {
+        const response = await axios.get(createURL("expense/image"));
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function deleteMember(){
-    const response = (await axios.delete(createURL("member/list")))
-    then((response) => response.data)
-    .catch((error) => error.response.data)
-    return response 
+export async function deleteMember() {
+    try {
+        const response = await axios.delete(createURL("member/list"));
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
 
-export async function insertMember(member){
-    const response = await axios.post(createURL('member'),member)
-    .then((response) => response.data)
-    .catch((error) => error.response.data);
-    return response
+export async function insertMember(member) {
+    try {
+        const response = await axios.post(createURL('member'), member);
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
 }
+
+export async function insertFeeInfo(feeInfo){
+    try {
+        const response = await axios.post(createURL('feeInfo'), feeInfo);
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}   
+
+export async function insertExpense(expense){
+    try {
+        const response = await axios.post(createURL('expense'), expense);
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}   

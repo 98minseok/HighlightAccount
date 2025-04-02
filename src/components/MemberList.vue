@@ -116,7 +116,6 @@ import { insertMember } from '@/api/api';
         }   
     }
     const sortMemberList = (type) => {
-        console.log(type);
         if((sortedType.value.includes(type) && sortedType.value.includes("desc"))){
             filteredMemberList.value = filteredMemberList.value.sort((a,b) => compareValue(a[type],b[type]))
             sortedType.value = type + "asc"

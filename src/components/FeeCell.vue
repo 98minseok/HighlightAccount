@@ -15,7 +15,7 @@ const props = defineProps({
 
 const emit = defineEmits(['checkCell'])
 const openModal = inject("openModal");
-const {addFeeData,deleteFeeData,getFeeTableType,setSelectFee,renewFeeData} = useFeeStore();
+const {addFeeData,deleteFeeData,getFeeTableType,setSelectFee} = useFeeStore();
 const isPaidValue = ref(props.isPaid)
 const feeTableType = ref(getFeeTableType());
 const onClickFeeCell = () => {

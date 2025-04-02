@@ -9,7 +9,7 @@
 <script setup>
 import { inject, watch } from 'vue';
 import ImageSlide from './ImageSlide.vue';
-const open = inject("openModal")
+const open = inject("openImageModal")
 const props = defineProps({
     imageData : Array,
 })
