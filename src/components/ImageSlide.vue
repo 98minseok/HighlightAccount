@@ -17,7 +17,7 @@ const props = defineProps({
 const index = ref(0);
 
 const imageData = props.imageData ?? [];
-const imageSrc = computed(() => `/src/assets/image${imageData[index.value].image}`);
+const imageSrc = computed(() => `http://localhost:8080/${imageData[index.value].image}`);
 const isLoaded = ref(false);
 
 const clickPrevPage = () => {

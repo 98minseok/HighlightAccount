@@ -1,36 +1,26 @@
 <template>
     <div v-if="open" class="modal">
         <h2>납부정보    </h2>
-        <div class ="modal-div">
-            <ul>
-                <li>
-                    아이디
-                </li>
-                <li>
-                    이름
-                </li>
-                <li>
-                    납입 일자
-                </li>
-                <li>
-                    금액
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    {{ selectFeeData.memberId }}
-                </li>
-                <li>
-                    {{ selectFeeData.memberName || "이름없음" }}
-                </li>
-                <li>
-                    {{ selectFeeData.feeDate }}
-                </li>
-                <li>
-                    {{ selectFeeData.amount.toLocaleString() }}
-                </li>
-            </ul>
-        </div>
+        <table class="fee-table">
+            <tbody>
+                <tr>
+            <th>아이디</th>
+            <td>{{ selectFeeData.memberId }}</td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td>{{ selectFeeData.memberName || "이름없음" }}</td>
+        </tr>
+        <tr>
+            <th>납입 일자</th>
+            <td>{{ selectFeeData.feeDate }}</td>
+        </tr>
+        <tr>
+            <th>금액</th>
+            <td>{{ selectFeeData.amount.toLocaleString() }}</td>
+        </tr>
+            </tbody>
+    </table>
       <button @click="open = false">닫기</button>
     </div>
   </template>
@@ -72,16 +62,18 @@ watch(open, (newValue) => {
 .modal button{
     width : 100%;
 }
-.modal-div{
-    display: flex;
-}
-.modal-div ul{
-    list-style-type: none;
+
+.fee-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.modal-div li{
-    padding : 10px;
-    border : 1px solid black;
-    border-collapse: collapse;
+.fee-table th {
+    padding: 8px;
+    font-weight: bold;
+}
+
+.fee-table td {
+    padding: 8px;
 }
 </style>

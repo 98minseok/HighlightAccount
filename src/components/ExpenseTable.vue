@@ -26,7 +26,7 @@
                 <tr v-for="expense in expenseData" :key="expense.id">
                     <td>{{ expense.date }}</td>
                     <td style="width: 50vh;"><span class ="expense-table-content" @click ="clickContent(expense.id)">{{ expense.content }}</span></td>
-                    <td>{{ expense.cost }}</td>
+                    <td>{{ expense.cost.toLocaleString() }}원</td>
                     <td>{{ expense.balance }}</td>
                 </tr>
             </tbody>

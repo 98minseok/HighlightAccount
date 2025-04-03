@@ -1,45 +1,41 @@
 <template>
     <div v-if="open" class="modal">
         <h2>등록하기</h2>
-        <div class ="modal-div">
-            <ul>
-                <li>
-                    일시
-                </li>
-                <li>
-                    지출내용
-                </li>
-                <li>
-                    금액
-                </li>
-                <li>
-                    사진
-                </li>
-            </ul>
-            <ul class ="modal-div-input-ul">
-                <li>
-                    <input v-model="expenseInfo.date" type="date">
-                </li>
-                <li>
-                    <input v-model="expenseInfo.content" type="text">
-                </li>
-                <li>
-                    <input v-model="expenseInfo.cost" type="number">
-                </li>
-                <li>
-                    사진
-                </li>
-            </ul>
-        </div>
+        <table class ="expense-table">
+            <tbody>
+                <tr>
+                    <th>일시</th>
+                    <td><input v-model="expenseInfo.date" type="date"></td>
+                </tr>
+                <tr>
+                    <th>지출내용</th>
+                    <td><input v-model="expenseInfo.content" type="text"></td>
+                </tr>
+                <tr>
+                    <th>금액</th>
+                    <td><input v-model="expenseInfo.cost" type="number"></td>
+                </tr>
+                <tr>
+                    <th>사진</th>
+                    <td>
+                        <ImageInput></ImageInput>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <button @click="insertExpenseButton">등록</button>
-      <button @click="open = false">닫기</button>
+        <button @click="open = false">닫기</button>
     </div>
-  </template>
+</template>
 
 <script setup>
 import { insertExpense } from '@/api/api';
-import { inject, ref, watch } from 'vue';
+import { inject, provide, ref, watch } from 'vue';
+import ImageInput from './ImageInput.vue';
 const open = inject("openInsertModal")
+const expesneImageInfo = ref([]);
+
+provide("expenseImageInfo",expesneImageInfo)
 watch(open, (newValue) => {
     if (newValue) {
     }
@@ -47,8 +43,9 @@ watch(open, (newValue) => {
 
 const expenseInfo = ref({})
 
-const insertExpenseButton = async() => {
-    const response = await insertExpense(expenseInfo.value)
+const insertExpenseButton = async () => {
+    const response = await insertExpense(expenseInfo.value,expesneImageInfo.value);
+    alert(response.message);
     console.log(response);
 }
 
@@ -57,43 +54,39 @@ const insertExpenseButton = async() => {
 
 <style scoped>
 .modal {
-  position: fixed;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap : 10px;
-  z-index: 999;
-  top: 20%;
-  left: 50%;
-  width: 600px;
-  margin-left : -300px; 
-  padding : 20px;
-  box-sizing: border-box;
-  background-color: rgb(249, 249, 249)
-}
-.modal button{
-    width : 100%;
-}
-.modal-div{
+    position: fixed;
     display: flex;
-}
-.modal-div ul{
-    list-style-type: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 999;
+    top: 20%;
+    left: 50%;
+    width: 600px;
+    margin-left: -300px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: rgb(249, 249, 249)
 }
 
-.modal-div li{
-    padding : 10px;
-    min-height :60px;
-    max-height: 80px;
-    border : 1px solid black;
+.modal button {
+    width: 100%;
+}
+.expense-table {
+    width: 100%;
     border-collapse: collapse;
 }
 
-.modal-div-input-ul{
-    width : 400px;
+.expense-table th {
+    padding: 8px;
 }
-.modal-div-input-ul input{
-    width : 100%;
+
+.expense-table td {
+    padding: 8px;
+}
+
+.expense-table input {
+    width: 100%;
 }
 </style>
