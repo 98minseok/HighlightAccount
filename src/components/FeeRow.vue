@@ -20,7 +20,6 @@ const feeData = ref([])
 const {getFeeData} = useFeeStore();
 const feeDataValidation = ref(false)
 const renewData = async() => {
-    console.log(props.user);
     feeData.value = await getFeeData(props.user.id);
     feeDataValidation.value = true
 }

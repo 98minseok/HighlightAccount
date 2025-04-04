@@ -57,12 +57,16 @@ const clickContent = (expenseId) => {
         openImageModal.value = true;
     }
 }
-provide("openImageModal",openImageModal);
-provide("openInsertModal",openInsertModal);
+
+
 const fetchInitialData = async () => {
     expenseData.value = await getExpenseData();
     await getExpenseImageData();
 };
+
+provide("fetchInit",fetchInitialData);
+provide("openImageModal",openImageModal);
+provide("openInsertModal",openInsertModal);
 
 onMounted(fetchInitialData);
 

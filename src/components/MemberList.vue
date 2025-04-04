@@ -41,7 +41,7 @@
                 <td>
                     <div class ="td-button-div">
                         <button>수정</button>
-                        <button>삭제</button>
+                        <button @click ="clickDeleteMember(member)">삭제</button>
                     </div>
                 </td>
             </tr>
@@ -50,7 +50,7 @@
     <div class ="memberlist-search-div">
         <select v-model="searchType">
             <option value ="id">아이디</option>
-            <option value ="name">이름</option>
+            <option value ="name">이름</option> 
         </select>
         <input  @keydown.enter="clickSearch" v-model ="searchValue" type ="text">
         <button @click ="clickSearch">검색</button>
@@ -71,7 +71,7 @@
 import { useUserStore } from '@/store/user';
 import { computed, onMounted, ref } from 'vue';
 import MemberModal from './MemberModal.vue';
-import { insertMember } from '@/api/api';
+import { deleteMember, insertMember } from '@/api/api';
 
     const memberList = ref([])
     const filteredMemberList = ref([]);
@@ -90,6 +90,7 @@ import { insertMember } from '@/api/api';
         address : "",
         birthDate : "",
     });
+
     onMounted(async() => {
         memberList.value = await getUserData()
         filteredMemberList.value = memberList.value;
@@ -141,11 +142,19 @@ import { insertMember } from '@/api/api';
         const response = await insertMember(newMember.value);
         onInsertMember.value = false;
         memberList.value = await getUserData()
-
         alert(response.message);
         filteredMemberList.value = memberList.value;    
     }
 
+    const clickDeleteMember = async(member) => {
+        const isConfirm = confirm(`${member.name}님의 정보를 삭제하시겠습니까?`)
+        if(isConfirm){
+            const response = await deleteMember(member);
+            memberList.value = await getUserData()
+            filteredMemberList.value = memberList.value;
+            alert("삭제되었습니다.")
+        }
+    }
     function exportArrayToExcel() {
             // 헤더 추출 (객체의 키를 헤더로 사용)
             const headers = Object.keys(memberList.value[0]);

@@ -91,15 +91,6 @@ export async function getExpenseImage() {
   }
 }
 
-export async function deleteMember() {
-  try {
-    const response = await axios.delete(createURL("member/list"))
-    return response.data
-  } catch (error) {
-    return error.response.data
-  }
-}
-
 export async function insertMember(member) {
   try {
     const response = await axios.post(createURL("member"), member)
@@ -121,20 +112,42 @@ export async function insertFeeInfo(feeInfo) {
 export async function insertExpense(expense, images) {
   try {
     const formData = new FormData()
-    images.forEach((element) => {
-      formData.append("images", element)
-    })
+    let url = ""
+    console.log(images.length);
+    if(images.length > 0){
+      images.forEach((element) => {
+        formData.append("images", element)
+      })
+      url = createURL("expense")
+    }
+    else{
+      url = createURL("expense/no-image")
+    }
     formData.append("date", expense.date);
     formData.append("content", expense.content);    
     formData.append("cost", expense.cost);
     console.log(formData , "FormData");
-    const response = await axios.post(createURL("expense"), formData, {
+    const response = await axios.post(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     })
     return response.data
   } catch (error) {
+    return error.response.data
+  }
+}
+
+
+export async function deleteMember(member){
+  console.log(member);
+  try{
+    const response = await axios.delete(createURL("member"),{
+      data : member
+    })
+    return response.data
+  }
+  catch(error){
     return error.response.data
   }
 }

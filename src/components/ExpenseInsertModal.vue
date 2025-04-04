@@ -33,6 +33,7 @@ import { insertExpense } from '@/api/api';
 import { inject, provide, ref, watch } from 'vue';
 import ImageInput from './ImageInput.vue';
 const open = inject("openInsertModal")
+const fetchInit = inject("fetchInit");
 const expesneImageInfo = ref([]);
 
 provide("expenseImageInfo",expesneImageInfo)
@@ -45,6 +46,8 @@ const expenseInfo = ref({})
 
 const insertExpenseButton = async () => {
     const response = await insertExpense(expenseInfo.value,expesneImageInfo.value);
+    open.value = false;
+    fetchInit();
     alert(response.message);
     console.log(response);
 }
