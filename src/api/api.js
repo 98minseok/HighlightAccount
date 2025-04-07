@@ -151,3 +151,14 @@ export async function deleteMember(member){
     return error.response.data
   }
 }
+
+export async function updateMember(member){
+  console.log(member);
+  try{
+    const response = await axios.put(createURL("member"),member)
+    return response.data
+  }
+  catch(error){
+    return error.response.data
+  }
+}

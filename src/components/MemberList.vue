@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-if ="onInsertMember" align="center" class ="memberlist-tr">
+            <tr v-if ="onInsertMember || onUpdateMember" align="center" class ="memberlist-tr">
                 <td class ="memberlist-td">회원이 직접 등록</td>
                 <td class ="memberlist-td"><input type="text" v-model="newMember.name"></td>
                 <td class ="memberlist-td"><input type="number" v-model="newMember.backNumber"></td>
@@ -40,7 +40,7 @@
                 <td class ="memberlist-td">{{ member.birthDate }}</td>
                 <td>
                     <div class ="td-button-div">
-                        <button>수정</button>
+                        <button @click = "clickUpdateMember(member)">수정</button>
                         <button @click ="clickDeleteMember(member)">삭제</button>
                     </div>
                 </td>
@@ -71,7 +71,7 @@
 import { useUserStore } from '@/store/user';
 import { computed, onMounted, ref } from 'vue';
 import MemberModal from './MemberModal.vue';
-import { deleteMember, insertMember } from '@/api/api';
+import { deleteMember, insertMember, updateMember } from '@/api/api';
 
     const memberList = ref([])
     const filteredMemberList = ref([]);
@@ -82,6 +82,7 @@ import { deleteMember, insertMember } from '@/api/api';
     const sortedType = ref("");
     const {getUserData} = useUserStore();
     const onInsertMember = ref(false);
+    const onUpdateMember = ref(false);
     const newMember = ref({
         id : "",
         name : "",
@@ -139,10 +140,19 @@ import { deleteMember, insertMember } from '@/api/api';
     }
 
     const clickSaveMember = async() => {
-        const response = await insertMember(newMember.value);
-        onInsertMember.value = false;
+
+        if(onInsertMember.value){
+            const response = await insertMember(newMember.value);
+            onInsertMember.value = false;
+            alert(response.message);
+        }
+        else if(onUpdateMember.value){
+            const response = await updateMember(newMember.value);
+            onUpdateMember.value = false;
+            alert(response.message);
+        }
+
         memberList.value = await getUserData()
-        alert(response.message);
         filteredMemberList.value = memberList.value;    
     }
 
@@ -154,6 +164,11 @@ import { deleteMember, insertMember } from '@/api/api';
             filteredMemberList.value = memberList.value;
             alert("삭제되었습니다.")
         }
+    }
+
+    const clickUpdateMember = (member) => {
+        newMember.value = member;
+        onUpdateMember.value = true;
     }
     function exportArrayToExcel() {
             // 헤더 추출 (객체의 키를 헤더로 사용)
