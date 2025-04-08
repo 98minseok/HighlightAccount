@@ -1,8 +1,8 @@
 <template>
     <div class ="feetable-button-div">
-        <button @click ="saveFeeDataTable">저장</button>
-        <button @click ="renewFeeDataTable">되돌리기</button>
-        <button @click ="toggleFeeTable">{{ feeTableType == "select" ? "수정하기" : "조회하기" }}</button>
+        <CustomButton @click ="saveFeeDataTable">저장</CustomButton>
+        <CustomButton @click ="renewFeeDataTable">되돌리기</CustomButton>
+        <CustomButton @click ="toggleFeeTable">{{ feeTableType == "select" ? "수정하기" : "조회하기" }}</CustomButton>
     </div>
     <h1>2025년도</h1>
     <div class ="feetable-div">
@@ -29,6 +29,7 @@ import { onMounted, provide, ref } from 'vue';
 import FeeRow from './FeeRow.vue';
 import { useFeeStore } from '@/store/fee';
 import FeeInfoModal from './FeeInfoModal.vue';
+import CustomButton from './CustomButton.vue';
 defineProps({
     userData : Array
 })
@@ -70,15 +71,12 @@ const saveFeeDataTable = async() =>{
 <style scoped>
     .feetable-button-div{
         display:flex;
-        width:100%;
-        justify-content: flex-end;
         align-items: center;
-        gap : 20px;
+        gap : 10px;
+        padding : 10px;
+        justify-content: flex-end;
+        box-sizing: border-box;
         margin-bottom : 10px;
-    }
-    .feetable-button-div button{
-        width : 5vw;
-        padding : 0.3vw;
     }
     .feetable-div{
         height : 100%;
@@ -88,6 +86,9 @@ const saveFeeDataTable = async() =>{
     @media screen and (max-width: 1439px) {
     .feetable{
         width : 1000px;
+    }
+    .feetable-button-div{
+        justify-content: center;
     }
     }
 

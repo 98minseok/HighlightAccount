@@ -1,14 +1,15 @@
 <template>
     <div v-if="open" class="modal">
-        <h2>납부정보</h2>
+        <h2>지출정보</h2>
         <ImageSlide :imageData="imageData"></ImageSlide>
-      <button @click="open = false">닫기</button>
+      <CustomButton @click="open = false">닫기</CustomButton>
     </div>
   </template>
 
 <script setup>
 import { inject, watch } from 'vue';
 import ImageSlide from './ImageSlide.vue';
+import CustomButton from './CustomButton.vue';
 const open = inject("openImageModal")
 const props = defineProps({
     imageData : Array,
@@ -33,8 +34,8 @@ watch(open, (newValue) => {
   z-index: 999;
   top: 20%;
   left: 50%;
-  width: 400px;
-  margin-left : -200px;
+  width: 20vw;
+  margin-left: -10vw;
   padding : 20px;
   box-sizing: border-box;
   background-color: rgb(249, 249, 249)

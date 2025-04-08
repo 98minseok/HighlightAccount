@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr v-if ="onInsertMember || onUpdateMember" align="center" class ="memberlist-tr">
-                <td class ="memberlist-td">회원이 직접 등록</td>
+                <td class ="memberlist-td"></td>
                 <td class ="memberlist-td"><input type="text" v-model="newMember.name"></td>
                 <td class ="memberlist-td"><input type="number" v-model="newMember.backNumber"></td>
                 <td class ="memberlist-td"><input type="email" v-model="newMember.email"></td>
@@ -60,9 +60,9 @@
         <button @click ="page = num-1" :class="num-1 == page ? 'active' : ''" v-for ="num in listSize">{{ num }}</button>
     </div>
     <div class="memberlist-button-div">
-        <button v-if ="canPrevPage" @click="clickPrevPage">이전</button>
+        <button v-if ="isPrevPage" @click="clickPrevPage">이전</button>
 
-        <button v-if ="canNextPage" @click="clickNextPage">다음</button>
+        <button v-if ="isNextPage" @click="clickNextPage">다음</button>
     </div>
     </div>
     <button @click="exportArrayToExcel()">엑셀다운</button>
@@ -97,8 +97,12 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
         filteredMemberList.value = memberList.value;
     })
     const listSize = computed(() => Math.ceil(filteredMemberList.value.length / 10))
-    const canNextPage = computed(() => page.value < listSize.value - 1)
-    const canPrevPage = computed(() => page.value > 0)
+    const isNextPage = computed(() => page.value < listSize.value - 1)
+    const isPrevPage = computed(() => page.value > 0)
+    const renewData = async() => {
+        memberList.value = await getUserData()
+        filteredMemberList.value = memberList.value; 
+    }
     const clickSearch = () => {
         page.value = 0;
         filteredMemberList.value = memberList.value.filter((e) => e[searchType.value].includes(searchValue.value))
@@ -108,12 +112,12 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
         filteredMemberList.value = memberList.value;
     }
     const clickNextPage = () =>{
-        if(canNextPage){
+        if(isNextPage){
             page.value++;
         }
     }
     const clickPrevPage = () =>{
-        if(canPrevPage){
+        if(isPrevPage){
             page.value--;
         }   
     }
@@ -140,29 +144,25 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
     }
 
     const clickSaveMember = async() => {
-
+        let response;
         if(onInsertMember.value){
-            const response = await insertMember(newMember.value);
+            response = await insertMember(newMember.value);
             onInsertMember.value = false;
-            alert(response.message);
         }
         else if(onUpdateMember.value){
-            const response = await updateMember(newMember.value);
+            response = await updateMember(newMember.value);
             onUpdateMember.value = false;
-            alert(response.message);
         }
-
-        memberList.value = await getUserData()
-        filteredMemberList.value = memberList.value;    
+        alert(response.message);
+        await renewData();
     }
 
     const clickDeleteMember = async(member) => {
         const isConfirm = confirm(`${member.name}님의 정보를 삭제하시겠습니까?`)
         if(isConfirm){
             const response = await deleteMember(member);
-            memberList.value = await getUserData()
-            filteredMemberList.value = memberList.value;
-            alert("삭제되었습니다.")
+            await renewData();
+            alert(response.message);
         }
     }
 
@@ -206,8 +206,8 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
     .memberlist-main{
         display: flex;
         flex-direction: column;
+        overflow: scroll;
         width: 100%;
-        padding : 50px;
         align-items: center;
         justify-content: center;
     }
@@ -254,6 +254,7 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
         height:100%;
         align-items: center;
         justify-content: center;
+        overflow : hidden;
         gap:20px;
     }
     .td-button-div button{

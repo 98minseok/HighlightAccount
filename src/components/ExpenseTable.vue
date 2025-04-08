@@ -8,9 +8,11 @@
             <label for="end-date">종료날짜</label>
             <input v-model="endDate" type="date" id="end-date">
         </div>
-        <button type="button" @click="searchExpenseByDate">조회하기</button>
-        <button type="button" @click="searchExpense">초기화</button>
-        <button type="button" @click="insertExpense">등록하기</button>
+        <div class="date-button-div">
+            <CustomButton @click="searchExpenseByDate">조회하기</CustomButton>
+            <CustomButton type="button" @click="searchExpense">초기화</CustomButton>
+            <CustomButton type="button" @click="insertExpense">등록하기</CustomButton>
+        </div>
     </div>
     <div class="expense-table-div">
         <table>
@@ -25,7 +27,7 @@
             <tbody>
                 <tr v-for="expense in expenseData" :key="expense.id">
                     <td>{{ expense.date }}</td>
-                    <td style="width: 50vh;"><span class ="expense-table-content" @click ="clickContent(expense.id)">{{ expense.content }}</span></td>
+                    <td style="width: 50vw;"><span class ="expense-table-content" @click ="clickContent(expense.id)">{{ expense.content }}</span></td>
                     <td>{{ expense.cost.toLocaleString() }}원</td>
                     <td>{{ expense.balance }}</td>
                 </tr>
@@ -42,6 +44,7 @@ import { useExpenseStore } from '@/store/expense';
 import { onMounted, provide, ref } from 'vue';
 import ExpenseModal from './ExpenseModal.vue';
 import ExpenseInsertModal from './ExpenseInsertModal.vue';
+import CustomButton from './CustomButton.vue';
 
 const startDate = ref("");
 const endDate = ref("");
@@ -118,6 +121,10 @@ const searchExpenseByDate = async () => {
     display: flex;
     flex-direction: column;
 }
+.date-button-div{
+    display: flex;
+    gap: 10px;
+}
 .date-container button {
     margin: auto 0;
 }
@@ -126,5 +133,16 @@ const searchExpenseByDate = async () => {
 }
 .expense-table-content:hover{
     color : rgb(185, 185, 185)
+}
+@media screen and (max-width : 1440px){
+.date-container {
+    flex-direction: column;
+    width:100%;
+    align-items: center;
+    margin-bottom : 20px;
+}
+.date-div{
+    width:100%;
+}
 }
 </style>

@@ -1,7 +1,8 @@
 <template>
     <div class="home-main">
         <nav class="home-nav">
-            <ul class="home-nav-list">
+            <CustomButton class ="mobile-nav-button" style ="margin-bottom : 20px" @click="onClickOpenTab">메뉴</CustomButton>
+            <ul class="home-nav-list" :class ="openMobileTab ? 'mobileMenu' : ''">
                 <RouterLink active-class="home-nav-item-active" class="home-nav-item" to="main">
                     <li>HOME</li>
                 </RouterLink>
@@ -15,7 +16,7 @@
                     <li>지출 내역</li>
                 </RouterLink>
             </ul>
-            <ul class="home-nav-list">
+            <ul class="home-nav-list" :class ="openMobileTab ? 'mobileMenu' : ''">
                 <RouterLink to="login">
                     <li class="home-nav-item">Logout</li>
                 </RouterLink>
@@ -29,6 +30,13 @@
 
 </template>
 <script setup>
+import CustomButton from '@/components/CustomButton.vue';
+import { ref } from 'vue';
+
+    const openMobileTab = ref(true);
+    const onClickOpenTab = () => {
+        openMobileTab.value = !openMobileTab.value;
+    }
     window.addEventListener('scroll', () => {
         let scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
         const homeNav = document.querySelector(".home-nav");
@@ -54,7 +62,12 @@
     width: 100%;
     height: 100vh;
 }
-
+.mobileMenu{
+    display:none;
+}
+.mobile-nav-button{
+    display:none;
+}
 .home-nav {
     position: sticky;
     display: flex;
@@ -97,6 +110,28 @@
     height: 90vh;
     padding : 3vw 20vw;
     width: 100%;
+}
+
+@media screen and (max-width : 1440px) {
+    .home-router {
+    padding : 3vw 5vw;
+}
+
+@media screen and (max-width : 600px) {
+    .home-nav{
+        flex-direction: column;
+    }
+    .home-nav-list{
+        flex-direction: column;
+        display:none;
+    }
+    .mobileMenu{
+        display: flex;
+    }
+    .mobile-nav-button{
+        display:block;
+    }
+}
 }
 
 </style>
