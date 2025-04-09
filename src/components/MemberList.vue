@@ -1,7 +1,7 @@
 <template>
     <div class ="top-row">    
         <h1>팀원 정보</h1>
-        <button @click="clickInsertMember">{{ onInsertMember ? "취소" : "회원 추가" }}</button>
+        <CustomButton @click="clickInsertMember">{{ onInsertMember ? "취소" : "회원 추가" }}</CustomButton>
     </div>
 
     <div class ="memberlist-main">
@@ -32,7 +32,8 @@
                 </select></td>      
                 <td style="width:150px;">
                     <div class ="td-button-div">
-                        <button @click ="clickSaveMember">저장</button>
+                        <CustomButton @click ="clickSaveMember">저장</CustomButton>
+                        <CustomButton @click ="onUpdateMember = false">취소</CustomButton>
                     </div>
                 </td>   
             </tr>
@@ -46,8 +47,8 @@
                 <td class ="memberlist-td">{{ member.activeType }}</td>
                 <td>
                     <div class ="td-button-div">
-                        <button @click = "clickUpdateMember(member)">수정</button>
-                        <button @click ="clickDeleteMember(member)">삭제</button>
+                        <CustomButton @click = "clickUpdateMember(member)">수정</CustomButton>
+                        <CustomButton @click ="clickDeleteMember(member)">삭제</CustomButton>
                     </div>
                 </td>
             </tr>
@@ -59,8 +60,8 @@
             <option value ="name">이름</option> 
         </select>
         <input  @keydown.enter="clickSearch" v-model ="searchValue" type ="text">
-        <button @click ="clickSearch">검색</button>
-        <button @click ="clickReset">초기화</button>
+        <CustomButton @click ="clickSearch">검색</CustomButton>
+        <CustomButton @click ="clickReset">초기화</CustomButton>
     </div>
     <div class="memberlist-button-div">
         <button @click ="page = num-1" :class="num-1 == page ? 'active' : ''" v-for ="num in listSize">{{ num }}</button>
@@ -71,13 +72,14 @@
         <button v-if ="isNextPage" @click="clickNextPage">다음</button>
     </div>
     </div>
-    <button @click="exportArrayToExcel()">엑셀다운</button>
+    <CustomButton @click="exportArrayToExcel()">엑셀다운</CustomButton>
 </template>
 <script setup>
 import { useUserStore } from '@/store/user';
 import { computed, onMounted, ref } from 'vue';
 import MemberModal from './MemberModal.vue';
 import { deleteMember, insertMember, updateMember } from '@/api/api';
+import CustomButton from './CustomButton.vue';
 
     const memberList = ref([])
     const filteredMemberList = ref([]);
@@ -238,7 +240,7 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
         gap:10px;
     }
     .memberlist-button-div button{
-        padding : 10px;
+        padding : 0px 10px;
         border-radius: 10px;
         cursor: pointer;
         border :none;
@@ -253,9 +255,11 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
         display:flex;
         gap: 10px;
         margin-top : 10px;
+        justify-content: center;
+        width:100%;
     }
     .memberlist-search-div *{
-        padding : 0.5vw;
+        padding : 0.1vw 0.5vw;
     }
     .memberlist-tr{
         height:50px;

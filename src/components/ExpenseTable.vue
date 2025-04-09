@@ -123,6 +123,7 @@ const searchExpenseByDate = async () => {
 }
 .date-button-div{
     display: flex;
+    width:100%; 
     gap: 10px;
 }
 .date-container button {
