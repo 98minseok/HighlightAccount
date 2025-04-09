@@ -54,8 +54,6 @@ const renewFeeDataTable = async() => {
         forceRenew.value = forceRenew.value + 1;
         alert("취소되었습니다.");
     }
-
-
 }   
 
 const saveFeeDataTable = async() =>{

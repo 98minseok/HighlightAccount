@@ -1,7 +1,7 @@
 <template>
     <div class ="top-row">    
         <h1>팀원 정보</h1>
-        <button @click="onInsertMember = !onInsertMember">{{ onInsertMember ? "취소" : "회원 추가" }}</button>
+        <button @click="clickInsertMember">{{ onInsertMember ? "취소" : "회원 추가" }}</button>
     </div>
 
     <div class ="memberlist-main">
@@ -14,6 +14,7 @@
                 <th @click ="sortMemberList('email')" class ="memberlist-th">이메일 {{ sortMark('email') }}</th>
                 <th @click ="sortMemberList('address')" class ="memberlist-th">주소 {{ sortMark('address') }}</th>
                 <th @click ="sortMemberList('birthDate')" class ="memberlist-th">생일 {{ sortMark('birthDate')}}</th>
+                <th @click ="sortMemberList('activeType')" class ="memberlist-th">활동여부 {{ sortMark('activeType')}}</th>
                 <th>관리하기</th>
             </tr>
         </thead>
@@ -24,7 +25,11 @@
                 <td class ="memberlist-td"><input type="number" v-model="newMember.backNumber"></td>
                 <td class ="memberlist-td"><input type="email" v-model="newMember.email"></td>
                 <td class ="memberlist-td"><input type="text" v-model="newMember.address"></td>
-                <td class ="memberlist-td"><input type="date" v-model="newMember.birthDate"></td>   
+                <td class ="memberlist-td"><input type="date" v-model="newMember.birthDate"></td>
+                <td class ="memberlist-td"><select v-model="newMember.activeType">
+                    <option value="활동">활동</option>
+                    <option value="비활동">비활동</option>
+                </select></td>      
                 <td style="width:150px;">
                     <div class ="td-button-div">
                         <button @click ="clickSaveMember">저장</button>
@@ -38,6 +43,7 @@
                 <td class ="memberlist-td">{{ member.email }}</td>
                 <td class ="memberlist-td">{{ member.address }}</td>
                 <td class ="memberlist-td">{{ member.birthDate }}</td>
+                <td class ="memberlist-td">{{ member.activeType }}</td>
                 <td>
                     <div class ="td-button-div">
                         <button @click = "clickUpdateMember(member)">수정</button>
@@ -165,10 +171,22 @@ import { deleteMember, insertMember, updateMember } from '@/api/api';
             alert(response.message);
         }
     }
-
+    const clickInsertMember = () => {
+        onInsertMember.value = !onInsertMember.value;
+        onUpdateMember.value = false;
+        newMember.value = {
+        id : "",
+        name : "",
+        backNumber : "",
+        email : "",
+        address : "",
+        birthDate : "",
+    }
+    }
     const clickUpdateMember = (member) => {
         newMember.value = member;
         onUpdateMember.value = true;
+        onInsertMember.value = false;
     }
     function exportArrayToExcel() {
             // 헤더 추출 (객체의 키를 헤더로 사용)

@@ -18,24 +18,26 @@ export const useFeeStore = defineStore('fee',() => {
         return feeData.value.filter((e) => e.memberId == memberId)
     }
     
-    const addFeeData = (memberId,month) => {
+    const addFeeData = (memberId,month,amount) => {
         feeData.value.push({
             id : feeData.value.length + 1,
             memberId : memberId,    
             month : month,
-            year : selectYear.value
+            year : selectYear.value,
+            amount : amount
         })
         feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month && e.year === selectYear.value));
         feeUpdateList.push({
             memberId : memberId,
             month : month,
             year : selectYear.value,
-            type : "add"
+            type : "add",
+            amount : amount
         })
         console.log(feeUpdateList , feeUpdateList.length);
         console.log(feeData.value , feeData.value.length);
     }
-
+                    
     const deleteFeeData = (memberId,month) => {
         feeData.value = feeData.value.filter((e) => !(e.memberId == memberId && e.month == month && e.year === selectYear.value))
         feeUpdateList = feeUpdateList.filter((e) => !(e.memberId == memberId && e.month == month && e.year === selectYear.value));
