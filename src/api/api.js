@@ -126,6 +126,7 @@ export async function insertExpense(expense, images) {
     formData.append("date", expense.date);
     formData.append("content", expense.content);    
     formData.append("cost", expense.cost);
+    formData.append("type",expense.type);
     console.log(formData , "FormData");
     const response = await axios.post(url, formData, {
       headers: {
@@ -166,6 +167,16 @@ export async function updateMember(member){
 export async function getAccountInfo(){
   try{
     const response = await axios.get(createURL("expense/accountinfo"))
+    return response.data
+  }
+  catch(error){
+    return error.response.data
+  }
+}
+
+export async function deleteExpense(expenseId){
+  try{
+    const response = await axios.delete(createURL(`expense/${expenseId}`))
     return response.data
   }
   catch(error){

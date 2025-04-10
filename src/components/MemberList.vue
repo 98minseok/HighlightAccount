@@ -91,14 +91,15 @@ import CustomButton from './CustomButton.vue';
     const {getUserData} = useUserStore();
     const onInsertMember = ref(false);
     const onUpdateMember = ref(false);
-    const newMember = ref({
+    const DEFAULT_NEW_MEMBER = {
         id : "",
         name : "",
-        backNumber : "",
+        backNumber : 0,
         email : "",
         address : "",
-        birthDate : "",
-    });
+        birthDate : new Date().toISOString().split('T')[0],
+    }
+    const newMember = ref(DEFAULT_NEW_MEMBER);
 
     onMounted(async() => {
         memberList.value = await getUserData()
@@ -176,14 +177,8 @@ import CustomButton from './CustomButton.vue';
     const clickInsertMember = () => {
         onInsertMember.value = !onInsertMember.value;
         onUpdateMember.value = false;
-        newMember.value = {
-        id : "",
-        name : "",
-        backNumber : "",
-        email : "",
-        address : "",
-        birthDate : "",
-    }
+        newMember.value = DEFAULT_NEW_MEMBER;
+        console.log(DEFAULT_NEW_MEMBER);
     }
     const clickUpdateMember = (member) => {
         newMember.value = member;

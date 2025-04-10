@@ -6,6 +6,12 @@ export const useExpenseStore = defineStore('expense',() => {
     const expenseData = ref([]);
     const expenseImageData = ref([
     ]);
+    const expenseModalData = ref({});
+
+    const setExpenseModalData = (expenseId) => {
+        expenseModalData.value = expenseData.value.find((e) => e.id = expenseId)
+        console.log(expenseModalData.value);    
+    }
 
     const getExpenseData = async() =>{
         const response = await getAllExpense();
@@ -26,5 +32,5 @@ export const useExpenseStore = defineStore('expense',() => {
     const getImagesByExpenseId = (expenseId) => {
         return expenseImageData.value.filter((data) => data.expenseId == expenseId)
     }
-    return { getExpenseData , getExpenseDataByDate , getImagesByExpenseId ,getExpenseImageData}
+    return { getExpenseData , getExpenseDataByDate , getImagesByExpenseId ,getExpenseImageData , setExpenseModalData ,expenseModalData}
 })

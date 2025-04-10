@@ -19,30 +19,32 @@
         <h1>지출 금액</h1>
         <h1>잔액</h1>
     </div>
-    <div class ="account-info-div">
+    <div v-if="accountInfo" class ="account-info-div">
         <h1>{{accountInfo.totalFee.toLocaleString()}}</h1>
-        <h1>{{ accountInfo.totalCost.toLocaleString() }}</h1>
-        <h1>{{ (accountInfo.totalFee - accountInfo.totalCost).toLocaleString() }}</h1>
+        <h1>{{ accountInfo.totalCost.toLocaleString()}}</h1>
+        <h1>{{ (accountInfo.totalFee - accountInfo.totalCost).toLocaleString()}}</h1>
     </div>
     <div class="expense-table-div">
         <table>
             <thead>
                 <tr>
                     <th>일시</th>
-                    <th>지출내용</th>
+                    <th>타입</th>
+                    <th>내용</th>
                     <th>금액</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="expense in expenseData" :key="expense.id">
+                <tr v-for="expense in expenseData" :key="expense.id" :class ="expense.type == 'expense' ? 'expense-row' : 'insert-row'">
                     <td>{{ expense.date }}</td>
+                    <td>{{ expense.type == "expense" ? '지출' : '입금'}}</td>
                     <td style="width: 50vw;"><span class ="expense-table-content" @click ="clickContent(expense.id)">{{ expense.content }}</span></td>
                     <td>{{ expense.cost.toLocaleString() }}원</td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <ExpenseModal :imageData="imageData"></ExpenseModal>
+    <ExpenseModal :expenseInfo="expenseInfo" :imageData="imageData"></ExpenseModal>
     <ExpenseInsertModal></ExpenseInsertModal>
 </template>
 
@@ -57,16 +59,16 @@ import CustomButton from './CustomButton.vue';
 const startDate = ref("");
 const endDate = ref("");
 const expenseData = ref([]);
-const {getExpenseData,getImagesByExpenseId,getExpenseImageData} = useExpenseStore();
+const {getExpenseData,getImagesByExpenseId,getExpenseImageData,setExpenseModalData} = useExpenseStore();
 const openImageModal = ref(false)
 const openInsertModal = ref(false);
 const imageData = ref([])
-const accountInfo = ref([]);
+const accountInfo = ref(null);
+const expenseInfo = ref({});
 const clickContent = (expenseId) => {
     imageData.value = getImagesByExpenseId(expenseId);
-    if(imageData.value.length > 0){
-        openImageModal.value = true;
-    }
+    expenseInfo.value = expenseData.value.find((e)=> e.id == expenseId);
+    openImageModal.value = true;
 }
 
 
@@ -79,7 +81,7 @@ const fetchInitialData = async () => {
 };
 
 provide("fetchInit",fetchInitialData);
-provide("openImageModal",openImageModal);
+provide("openModal",openImageModal);
 provide("openInsertModal",openInsertModal);
 
 onMounted(fetchInitialData);
@@ -150,6 +152,12 @@ const searchExpenseByDate = async () => {
     display:flex;
     justify-content: center;
     gap : 50px;
+}
+.expense-row{
+    background-color: rgb(255, 169, 169);
+}
+.insert-row{
+    background-color: rgb(233, 255, 201);
 }
 @media screen and (max-width : 1440px){
 .date-container {
