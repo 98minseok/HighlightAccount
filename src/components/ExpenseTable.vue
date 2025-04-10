@@ -14,6 +14,16 @@
             <CustomButton type="button" @click="insertExpense">등록하기</CustomButton>
         </div>
     </div>
+    <div class ="account-info-div">
+        <h1>회비 총액</h1>
+        <h1>지출 금액</h1>
+        <h1>잔액</h1>
+    </div>
+    <div class ="account-info-div">
+        <h1>{{accountInfo.totalFee.toLocaleString()}}</h1>
+        <h1>{{ accountInfo.totalCost.toLocaleString() }}</h1>
+        <h1>{{ (accountInfo.totalFee - accountInfo.totalCost).toLocaleString() }}</h1>
+    </div>
     <div class="expense-table-div">
         <table>
             <thead>
@@ -21,7 +31,6 @@
                     <th>일시</th>
                     <th>지출내용</th>
                     <th>금액</th>
-                    <th>잔액</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +38,6 @@
                     <td>{{ expense.date }}</td>
                     <td style="width: 50vw;"><span class ="expense-table-content" @click ="clickContent(expense.id)">{{ expense.content }}</span></td>
                     <td>{{ expense.cost.toLocaleString() }}원</td>
-                    <td>{{ expense.balance }}</td>
                 </tr>
             </tbody>
         </table>
@@ -39,7 +47,7 @@
 </template>
 
 <script setup>
-import { getExpenseByDate } from '@/api/api';
+import { getAccountInfo, getExpenseByDate } from '@/api/api';
 import { useExpenseStore } from '@/store/expense';
 import { onMounted, provide, ref } from 'vue';
 import ExpenseModal from './ExpenseModal.vue';
@@ -53,7 +61,7 @@ const {getExpenseData,getImagesByExpenseId,getExpenseImageData} = useExpenseStor
 const openImageModal = ref(false)
 const openInsertModal = ref(false);
 const imageData = ref([])
-
+const accountInfo = ref([]);
 const clickContent = (expenseId) => {
     imageData.value = getImagesByExpenseId(expenseId);
     if(imageData.value.length > 0){
@@ -64,6 +72,9 @@ const clickContent = (expenseId) => {
 
 const fetchInitialData = async () => {
     expenseData.value = await getExpenseData();
+    const response = await getAccountInfo();
+    accountInfo.value = response.data;
+    console.log(accountInfo.value);
     await getExpenseImageData();
 };
 
@@ -134,6 +145,11 @@ const searchExpenseByDate = async () => {
 }
 .expense-table-content:hover{
     color : rgb(185, 185, 185)
+}
+.account-info-div{
+    display:flex;
+    justify-content: center;
+    gap : 50px;
 }
 @media screen and (max-width : 1440px){
 .date-container {

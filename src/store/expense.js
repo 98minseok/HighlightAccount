@@ -12,7 +12,6 @@ export const useExpenseStore = defineStore('expense',() => {
         expenseData.value = response.data;
         return expenseData.value
     }
-
     const getExpenseImageData = async() => {
         const response = await getExpenseImage();
         expenseImageData.value = response.data;
